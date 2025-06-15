@@ -42,44 +42,50 @@ chat <- chat_openai() # can customize system prompt here if desired
 
 theme_solarized <- make_ai_theme(chat, 'solarized dark take on the default ggplot2 theme')
 #> function(base_size = 11, base_family = "") {
-#>   solarized_bg <- "#002b36"
-#>   solarized_fg <- "#839496"
-#>   solarized_grid <- "#073642"
-#>   solarized_axis <- "#586e75"
-#>   solarized_title <- "#93a1a1"
-#>   solarized_strip_bg <- "#073642"
-#>   solarized_strip_text <- "#b58900"
+#>   # Solarized dark palette
+#>   bg      <- "#002b36"
+#>   fg      <- "#839496"
+#>   fg_light <- "#93a1a1"
+#>   fg_strong <- "#eee8d5"
+#>   grid    <- "#073642"
+#>   grid_minor <- "#1a343f"
+#>   accent  <- "#b58900"
+#>   
 #>   theme_grey(base_size = base_size, base_family = base_family) %+replace%
 #>     theme(
-#>       line = element_line(colour = solarized_grid),
-#>       rect = element_rect(fill = solarized_bg, colour = NA),
-#>       text = element_text(colour = solarized_fg, family = base_family, size = 
-#> base_size),
-#>       plot.background = element_rect(fill = solarized_bg, colour = NA),
-#>       panel.background = element_rect(fill = solarized_bg, colour = NA),
-#>       panel.border = element_rect(fill = NA, colour = solarized_bg),
-#>       panel.grid.major = element_line(colour = solarized_grid, size = 0.5),
-#>       panel.grid.minor = element_line(colour = solarized_grid, size = 0.25),
-#>       axis.title = element_text(colour = solarized_title, size = rel(1.1)),
-#>       axis.text = element_text(colour = solarized_fg),
-#>       axis.text.x = element_text(margin = margin(t = 2.8, unit = "pt")),
-#>       axis.text.y = element_text(margin = margin(r = 2.8, unit = "pt")),
-#>       axis.ticks = element_line(colour = solarized_axis),
-#>       axis.line = element_line(colour = solarized_axis),
-#>       legend.background = element_rect(fill = solarized_bg, colour = NA),
-#>       legend.key = element_rect(fill = solarized_bg, colour = NA),
-#>       legend.text = element_text(colour = solarized_fg),
-#>       legend.title = element_text(colour = solarized_title),
-#>       plot.title = element_text(colour = solarized_title, size = rel(1.2), face
-#> = "bold", hjust = 0),
-#>       plot.subtitle = element_text(colour = solarized_title, size = rel(1), 
-#> hjust = 0),
-#>       plot.caption = element_text(colour = solarized_fg, size = rel(0.85), 
-#> hjust = 1),
-#>       strip.background = element_rect(fill = solarized_strip_bg, colour = NA),
-#>       strip.text = element_text(colour = solarized_strip_text, face = "bold", 
-#> size = rel(1)),
-#>       complete = TRUE
+#>       # Backgrounds
+#>       plot.background      = element_rect(fill = bg, colour = NA),
+#>       panel.background     = element_rect(fill = bg, colour = NA),
+#>       legend.background    = element_rect(fill = bg, colour = NA),
+#>       legend.key           = element_rect(fill = bg, colour = NA),
+#>       # Grid lines
+#>       panel.grid.major     = element_line(colour = grid, size = 0.6),
+#>       panel.grid.minor     = element_line(colour = grid_minor, size = 0.3),
+#>       # Text
+#>       text                 = element_text(family = base_family, size = 
+#> base_size, colour = fg_strong),
+#>       plot.title           = element_text(size = rel(1.2), face = "bold", 
+#> colour = fg_strong),
+#>       plot.subtitle        = element_text(size = rel(1), colour = fg),
+#>       plot.caption         = element_text(size = rel(0.9), colour = fg_light),
+#>       axis.title           = element_text(face = "bold", colour = fg_strong),
+#>       axis.text            = element_text(colour = fg_light),
+#>       axis.text.x          = element_text(colour = fg_light),
+#>       axis.text.y          = element_text(colour = fg_light),
+#>       # Axes
+#>       axis.ticks           = element_line(colour = fg_light),
+#>       axis.line            = element_line(colour = fg_light),
+#>       # Legend
+#>       legend.text          = element_text(colour = fg_light),
+#>       legend.title         = element_text(face = "bold", colour = fg_strong),
+#>       legend.position      = "right",
+#>       # Strips
+#>       strip.background     = element_rect(fill = grid, colour = NA),
+#>       strip.text           = element_text(face = "bold", colour = accent),
+#>       # Remove default borders
+#>       panel.border         = element_blank(),
+#>       # Facet label background
+#>       strip.placement      = "outside"
 #>     )
 #> }
 
@@ -127,3 +133,7 @@ It’s not guaranteed that the themes produced by this package will:
 Also, it’s worth thinking about how custom fonts (and other design
 choices like that) could enhance your themes, instead of just always
 using the LLM output and never trying to do anything more interesting.
+
+Lastly, for use in Shiny apps, you need to be careful about security.
+Using a hardened system prompt is a good idea if you don’t want people
+doing kooky things in your app.

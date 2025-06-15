@@ -46,8 +46,8 @@ make_ai_theme <- function(chat, theme_prompt){
 
   theme_function <- tryCatch({
     expr <- parse(text = theme_text)
-    bad_calls <- find_dangerous_calls(expr)
 
+    bad_calls <- find_dangerous_calls(expr)
     if (length(bad_calls)) {
       stop("LLM response contains disallowed functions: ",
            paste(bad_calls, collapse = ", "),

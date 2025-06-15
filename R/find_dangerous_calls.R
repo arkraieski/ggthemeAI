@@ -34,18 +34,32 @@
 #' @export
 find_dangerous_calls <- function(expr, forbidden = c("system", "system2", "unlink", "download.file")) {
   bad_calls <- character()
-
-  # AST traversal
   walk <- function(e) {
     if (is.call(e)) {
-      fn <- as.character(e[[1]])
-      if (fn %in% forbidden) {
-        bad_calls <<- c(bad_calls, fn)
+      fn <- e[[1]]
+      # only record if function name is a symbol (e.g., not `::` etc.)
+      if (is.symbol(fn)) {
+        fname <- as.character(fn)
+        if (fname %in% forbidden) {
+          bad_calls <<- c(bad_calls, fname)
+        }
       }
-      lapply(e[-1], walk)
+      # Recurse into all arguments of the call
+      lapply(as.list(e), walk)
+    } else if (is.recursive(e)) {
+      # Recurse into e.g., language objects like `{` blocks
+      lapply(as.list(e), walk)
     }
   }
 
-  walk(expr)
+  # Dispatch on input type
+  if (is.function(expr)) {
+    walk(body(expr))
+  } else if (is.call(expr) || is.expression(expr) || is.language(expr)) {
+    walk(expr)
+  } else {
+    stop("Unsupported input type. Use a function or quoted expression.")
+  }
+
   unique(bad_calls)
 }
