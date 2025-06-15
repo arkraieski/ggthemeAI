@@ -1,0 +1,17 @@
+Package: ggthemeAI
+Title: Create 'ggplot2' Themes with LLMs
+Version: 0.0.0.9000
+Authors@R: 
+    person("Alex", "Kraieski", , "arkraieski@gmail.com", role = c("aut", "cre"))
+Description: Functions for creating 'ggplot2' theme functions using LLMs.
+    This makes it is easy to prototype new highly custom themes or rapidly
+    try out new looks. Various LLM vendors are supported through 'ellmer'.
+License: GPL (>= 3)
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.2
+Imports: 
+    callr,
+    ellmer
+Suggests: 
+    ggplot2
