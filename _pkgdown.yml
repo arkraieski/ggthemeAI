@@ -1,0 +1,10 @@
+url: https://arkraieski.github.io/ggthemeAI/
+
+authors:
+  Alex Kraieski:
+    href: https://kraieski.dev
+template:
+  bootstrap: 5
+  bootswatch: superhero
+  theme: a11y-dark
+

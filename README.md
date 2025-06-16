@@ -32,6 +32,7 @@ description of the theme you want, and returns a ggplot2 theme function
 that you can use in your plots.
 
 ``` r
+
 library(ggplot2)
 library(ellmer)
 library(ggthemeAI)
@@ -42,50 +43,34 @@ chat <- chat_openai() # can customize system prompt here if desired
 
 theme_solarized <- make_ai_theme(chat, 'solarized dark take on the default ggplot2 theme')
 #> function(base_size = 11, base_family = "") {
-#>   # Solarized dark palette
-#>   bg      <- "#002b36"
-#>   fg      <- "#839496"
-#>   fg_light <- "#93a1a1"
-#>   fg_strong <- "#eee8d5"
-#>   grid    <- "#073642"
-#>   grid_minor <- "#1a343f"
-#>   accent  <- "#b58900"
-#>   
 #>   theme_grey(base_size = base_size, base_family = base_family) %+replace%
 #>     theme(
-#>       # Backgrounds
-#>       plot.background      = element_rect(fill = bg, colour = NA),
-#>       panel.background     = element_rect(fill = bg, colour = NA),
-#>       legend.background    = element_rect(fill = bg, colour = NA),
-#>       legend.key           = element_rect(fill = bg, colour = NA),
-#>       # Grid lines
-#>       panel.grid.major     = element_line(colour = grid, size = 0.6),
-#>       panel.grid.minor     = element_line(colour = grid_minor, size = 0.3),
-#>       # Text
-#>       text                 = element_text(family = base_family, size = 
-#> base_size, colour = fg_strong),
-#>       plot.title           = element_text(size = rel(1.2), face = "bold", 
-#> colour = fg_strong),
-#>       plot.subtitle        = element_text(size = rel(1), colour = fg),
-#>       plot.caption         = element_text(size = rel(0.9), colour = fg_light),
-#>       axis.title           = element_text(face = "bold", colour = fg_strong),
-#>       axis.text            = element_text(colour = fg_light),
-#>       axis.text.x          = element_text(colour = fg_light),
-#>       axis.text.y          = element_text(colour = fg_light),
-#>       # Axes
-#>       axis.ticks           = element_line(colour = fg_light),
-#>       axis.line            = element_line(colour = fg_light),
-#>       # Legend
-#>       legend.text          = element_text(colour = fg_light),
-#>       legend.title         = element_text(face = "bold", colour = fg_strong),
-#>       legend.position      = "right",
-#>       # Strips
-#>       strip.background     = element_rect(fill = grid, colour = NA),
-#>       strip.text           = element_text(face = "bold", colour = accent),
-#>       # Remove default borders
-#>       panel.border         = element_blank(),
-#>       # Facet label background
-#>       strip.placement      = "outside"
+#>       line = element_line(colour = "#586e75", size = 0.5, linetype = 1, lineend
+#> = "butt"),
+#>       rect = element_rect(fill = "#002b36", colour = NA),
+#>       text = element_text(colour = "#93a1a1", family = base_family, size = 
+#> base_size),
+#>       axis.text = element_text(colour = "#93a1a1"),
+#>       axis.title = element_text(colour = "#93a1a1"),
+#>       axis.ticks = element_line(colour = "#586e75"),
+#>       axis.line = element_line(colour = "#586e75"),
+#>       panel.background = element_rect(fill = "#002b36", colour = NA),
+#>       panel.border = element_rect(fill = NA, colour = "#586e75"),
+#>       panel.grid.major = element_line(colour = "#073642", size = 0.6),
+#>       panel.grid.minor = element_line(colour = "#073642", size = 0.3),
+#>       strip.background = element_rect(fill = "#073642", colour = NA),
+#>       strip.text = element_text(colour = "#b58900", size = rel(1.1), face = 
+#> "bold"),
+#>       legend.background = element_rect(fill = "#002b36", colour = NA),
+#>       legend.key = element_rect(fill = "#002b36", colour = NA),
+#>       legend.text = element_text(colour = "#93a1a1"),
+#>       legend.title = element_text(colour = "#b58900"),
+#>       plot.background = element_rect(fill = "#002b36", colour = NA),
+#>       plot.title = element_text(colour = "#b58900", size = rel(1.2), face = 
+#> "bold"),
+#>       plot.subtitle = element_text(colour = "#268bd2", size = rel(1.05)),
+#>       plot.caption = element_text(colour = "#586e75", size = rel(0.9)),
+#>       complete = TRUE
 #>     )
 #> }
 
@@ -95,7 +80,7 @@ ggplot(mtcars, aes(x = hp)) +
   theme_solarized() # LLM wrote the code for this function
 ```
 
-<img src="man/figures/README-example-1.png" width="100%" />
+<img src="man/figures/README-example-1.png" alt="Histogram of horsepower values showing peaks around 100 and 180 hp.  Bars are gray on a dark background." width="100%" />
 
 It should be noted that `make_ai_theme()` is **not** a pure function.
 This is by design. In addition to return the new theme, the state of the

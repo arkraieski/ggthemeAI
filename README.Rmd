@@ -37,6 +37,11 @@ pak::pkg_install('arkraieski/ggthemeAI')
 This example shows you how to get started creating themes with `ggthemeAI`. The `make_ai_theme()` function takes a chat object and a description of the theme you want, and returns a ggplot2 theme function that you can use in your plots.
 
 ```{r example}
+#| fig.alt: >
+#|   Histogram of horsepower values showing peaks around 100 and 180 hp. 
+#|   Bars are gray on a dark background.
+
+
 library(ggplot2)
 library(ellmer)
 library(ggthemeAI)

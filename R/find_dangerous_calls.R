@@ -1,6 +1,6 @@
 #' Detect Dangerous Function Calls in an R Expression
 #'
-#' Recursively inspects an R expression (typically parsed code) and identifies any calls
+#' Recursively inspects an R expression and identifies any calls
 #' to functions listed in a forbidden list. This is useful for validating code generated
 #' by large language models (LLMs) or user input before evaluating it.
 #'

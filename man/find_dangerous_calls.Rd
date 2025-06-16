@@ -20,7 +20,7 @@ A character vector of disallowed function names that were found in the expressio
 If none were found, returns \code{character(0)}.
 }
 \description{
-Recursively inspects an R expression (typically parsed code) and identifies any calls
+Recursively inspects an R expression and identifies any calls
 to functions listed in a forbidden list. This is useful for validating code generated
 by large language models (LLMs) or user input before evaluating it.
 }
