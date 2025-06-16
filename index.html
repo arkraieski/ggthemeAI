@@ -76,34 +76,42 @@
 <span></span>
 <span><span class="va">theme_solarized</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_ai_theme.html">make_ai_theme</a></span><span class="op">(</span><span class="va">chat</span>, <span class="st">'solarized dark take on the default ggplot2 theme'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(base_size = 11, base_family = "") {</span></span>
+<span><span class="co">#&gt;   solarized_bg   &lt;- "#002b36"</span></span>
+<span><span class="co">#&gt;   solarized_fg   &lt;- "#839496"</span></span>
+<span><span class="co">#&gt;   solarized_line &lt;- "#586e75"</span></span>
+<span><span class="co">#&gt;   solarized_grid &lt;- "#073642"</span></span>
+<span><span class="co">#&gt;   solarized_axis &lt;- "#93a1a1"</span></span>
+<span><span class="co">#&gt;   solarized_title&lt;- "#eee8d5"</span></span>
+<span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   theme_grey(base_size = base_size, base_family = base_family) %+replace%</span></span>
 <span><span class="co">#&gt;     theme(</span></span>
-<span><span class="co">#&gt;       line = element_line(colour = "#586e75", size = 0.5, linetype = 1, lineend</span></span>
-<span><span class="co">#&gt; = "butt"),</span></span>
-<span><span class="co">#&gt;       rect = element_rect(fill = "#002b36", colour = NA),</span></span>
-<span><span class="co">#&gt;       text = element_text(colour = "#93a1a1", family = base_family, size = </span></span>
-<span><span class="co">#&gt; base_size),</span></span>
-<span><span class="co">#&gt;       axis.text = element_text(colour = "#93a1a1"),</span></span>
-<span><span class="co">#&gt;       axis.title = element_text(colour = "#93a1a1"),</span></span>
-<span><span class="co">#&gt;       axis.ticks = element_line(colour = "#586e75"),</span></span>
-<span><span class="co">#&gt;       axis.line = element_line(colour = "#586e75"),</span></span>
-<span><span class="co">#&gt;       panel.background = element_rect(fill = "#002b36", colour = NA),</span></span>
-<span><span class="co">#&gt;       panel.border = element_rect(fill = NA, colour = "#586e75"),</span></span>
-<span><span class="co">#&gt;       panel.grid.major = element_line(colour = "#073642", size = 0.6),</span></span>
-<span><span class="co">#&gt;       panel.grid.minor = element_line(colour = "#073642", size = 0.3),</span></span>
-<span><span class="co">#&gt;       strip.background = element_rect(fill = "#073642", colour = NA),</span></span>
-<span><span class="co">#&gt;       strip.text = element_text(colour = "#b58900", size = rel(1.1), face = </span></span>
+<span><span class="co">#&gt;       plot.background      = element_rect(fill = solarized_bg, colour = NA),</span></span>
+<span><span class="co">#&gt;       panel.background     = element_rect(fill = solarized_bg, colour = NA),</span></span>
+<span><span class="co">#&gt;       panel.border         = element_rect(fill = NA, colour = solarized_line, </span></span>
+<span><span class="co">#&gt; size = 0.7),</span></span>
+<span><span class="co">#&gt;       panel.grid.major     = element_line(colour = solarized_grid, size=0.4),</span></span>
+<span><span class="co">#&gt;       panel.grid.minor     = element_line(colour = solarized_grid, size=0.2),</span></span>
+<span><span class="co">#&gt;       axis.text            = element_text(colour = solarized_fg, size = </span></span>
+<span><span class="co">#&gt; rel(0.85)),</span></span>
+<span><span class="co">#&gt;       axis.title           = element_text(colour = solarized_fg, size = </span></span>
+<span><span class="co">#&gt; rel(1)),</span></span>
+<span><span class="co">#&gt;       axis.ticks           = element_line(colour = solarized_axis),</span></span>
+<span><span class="co">#&gt;       axis.line            = element_line(colour = solarized_axis),</span></span>
+<span><span class="co">#&gt;       legend.background    = element_rect(fill = solarized_bg, colour = NA),</span></span>
+<span><span class="co">#&gt;       legend.key           = element_rect(fill = solarized_bg, colour = NA),</span></span>
+<span><span class="co">#&gt;       legend.text          = element_text(colour = solarized_fg),</span></span>
+<span><span class="co">#&gt;       legend.title         = element_text(colour = solarized_title, face = </span></span>
 <span><span class="co">#&gt; "bold"),</span></span>
-<span><span class="co">#&gt;       legend.background = element_rect(fill = "#002b36", colour = NA),</span></span>
-<span><span class="co">#&gt;       legend.key = element_rect(fill = "#002b36", colour = NA),</span></span>
-<span><span class="co">#&gt;       legend.text = element_text(colour = "#93a1a1"),</span></span>
-<span><span class="co">#&gt;       legend.title = element_text(colour = "#b58900"),</span></span>
-<span><span class="co">#&gt;       plot.background = element_rect(fill = "#002b36", colour = NA),</span></span>
-<span><span class="co">#&gt;       plot.title = element_text(colour = "#b58900", size = rel(1.2), face = </span></span>
+<span><span class="co">#&gt;       plot.title           = element_text(colour = solarized_title, size = </span></span>
+<span><span class="co">#&gt; rel(1.2), face = "bold", hjust = 0),</span></span>
+<span><span class="co">#&gt;       plot.subtitle        = element_text(colour = solarized_title, size = </span></span>
+<span><span class="co">#&gt; rel(1), face = "plain", hjust = 0),</span></span>
+<span><span class="co">#&gt;       plot.caption         = element_text(colour = solarized_fg, size = </span></span>
+<span><span class="co">#&gt; rel(0.8), hjust = 1),</span></span>
+<span><span class="co">#&gt;       strip.background     = element_rect(fill = solarized_line, colour = NA),</span></span>
+<span><span class="co">#&gt;       strip.text           = element_text(colour = solarized_title, face = </span></span>
 <span><span class="co">#&gt; "bold"),</span></span>
-<span><span class="co">#&gt;       plot.subtitle = element_text(colour = "#268bd2", size = rel(1.05)),</span></span>
-<span><span class="co">#&gt;       plot.caption = element_text(colour = "#586e75", size = rel(0.9)),</span></span>
-<span><span class="co">#&gt;       complete = TRUE</span></span>
+<span><span class="co">#&gt;       complete             = TRUE</span></span>
 <span><span class="co">#&gt;     )</span></span>
 <span><span class="co">#&gt; }</span></span>
 <span></span>
@@ -113,7 +121,7 @@
 <span>  <span class="fu">theme_solarized</span><span class="op">(</span><span class="op">)</span> <span class="co"># LLM wrote the code for this function</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" alt="Histogram of horsepower values showing peaks around 100 and 180 hp.  Bars are gray on a dark background." width="100%"></p>
 <p>It should be noted that <code><a href="reference/make_ai_theme.html">make_ai_theme()</a></code> is <strong>not</strong> a pure function. This is by design. In addition to return the new theme, the state of the R6 Chat is updated. You can then chat with the LLM to have it explain the theme or iterate on it.</p>
-<p>There’s also a <code><a href="reference/check_theme.html">check_theme()</a></code> function that checks if a function is actually a ggplot2 theme.</p>
+<p>There’s also a <code><a href="reference/check_theme.html">check_theme()</a></code> function that checks if a function is actually a ggplot2 theme. However, this function only works by actually executing the theme, <strong>so it shouldn’t be used as a security measure</strong>. I intend to add some contrast checking to that function.</p>
 </div>
 <div class="section level2">
 <h2 id="use-cases">Use cases<a class="anchor" aria-label="anchor" href="#use-cases"></a>
@@ -142,7 +150,7 @@
 <li>Not do nasty things like calling <code><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink()</a></code> (though validating the safety of generated functions is a development priority)</li>
 </ol>
 <p>Also, it’s worth thinking about how custom fonts (and other design choices like that) could enhance your themes, instead of just always using the LLM output and never trying to do anything more interesting.</p>
-<p>Lastly, for use in Shiny apps, you need to be careful about security. Using a hardened system prompt is a good idea if you don’t want people doing kooky things in your app.</p>
+<p>Lastly, for use in Shiny apps, you need to be careful about security. Using a hardened system prompt is a good idea if you don’t want people doing kooky things in your app. <strong>Currently, use in shiny in production is not recommended</strong>, but might be fine for internal apps or prototypes if other precautions are taken to keep things low risk.</p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
