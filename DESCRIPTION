@@ -8,8 +8,8 @@ Description: Functions for creating 'ggplot2' theme functions using LLMs.
     try out new looks. Various LLM vendors are supported through 'ellmer'.
 License: GPL (>= 3)
 Encoding: UTF-8
-URL: https://github.com/arkraieski/ggthemeAI
-BugReports:https://github.com/arkraieski/ggthemeAI/issues
+URL: https://github.com/arkraieski/ggthemeAI, https://arkraieski.github.io/ggthemeAI/
+BugReports: https://github.com/arkraieski/ggthemeAI/issues
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
