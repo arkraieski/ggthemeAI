@@ -14,7 +14,7 @@ Invisibly returns \code{TRUE} if the function is valid. Otherwise, an error is t
 }
 \description{
 Checks whether a given function returns a valid \code{ggplot2} theme object when called with no arguments.
-The function is executed in a separate R process to reduce risk.
+The function is executed in a separate R process to reduce risk, but is still ultimately unsafe.
 }
 \details{
 This function is useful for validating dynamically generated theme functions,

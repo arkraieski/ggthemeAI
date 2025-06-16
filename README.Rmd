@@ -60,7 +60,7 @@ ggplot(mtcars, aes(x = hp)) +
 
 It should be noted that `make_ai_theme()` is **not** a pure function. This is by design. In addition to return the new theme, the state of the R6 Chat is updated. You can then chat with the LLM to have it explain the theme or iterate on it.
 
-There's also a `check_theme()` function that checks if a function is actually a ggplot2 theme.
+There's also a `check_theme()` function that checks if a function is actually a ggplot2 theme. However, this function only works by actually executing the theme, **so it shouldn't be used as a security measure**. I intend to add some contrast checking to that function.
 
 ## Use cases
 
@@ -83,4 +83,4 @@ It's not guaranteed that the themes produced by this package will:
 
 Also, it's worth thinking about how custom fonts (and other design choices like that) could enhance your themes, instead of just always using the LLM output and never trying to do anything more interesting.
 
-Lastly, for use in Shiny apps, you need to be careful about security. Using a hardened system prompt is a good idea if you don't want people doing kooky things in your app.
+Lastly, for use in Shiny apps, you need to be careful about security. Using a hardened system prompt is a good idea if you don't want people doing kooky things in your app. **Currently, use in shiny in production is not recommended**, but might be fine for internal apps or prototypes if other precautions are taken to keep things low risk.

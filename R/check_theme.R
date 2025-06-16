@@ -1,7 +1,7 @@
 #' Validate a ggplot2 Theme Function
 #'
 #' Checks whether a given function returns a valid `ggplot2` theme object when called with no arguments.
-#' The function is executed in a separate R process to reduce risk.
+#' The function is executed in a separate R process to reduce risk, but is still ultimately unsafe.
 #'
 #' @param f A function expected to return a `ggplot2::theme` object. It must take no arguments.
 #'

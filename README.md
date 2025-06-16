@@ -43,34 +43,42 @@ chat <- chat_openai() # can customize system prompt here if desired
 
 theme_solarized <- make_ai_theme(chat, 'solarized dark take on the default ggplot2 theme')
 #> function(base_size = 11, base_family = "") {
+#>   solarized_bg   <- "#002b36"
+#>   solarized_fg   <- "#839496"
+#>   solarized_line <- "#586e75"
+#>   solarized_grid <- "#073642"
+#>   solarized_axis <- "#93a1a1"
+#>   solarized_title<- "#eee8d5"
+#> 
 #>   theme_grey(base_size = base_size, base_family = base_family) %+replace%
 #>     theme(
-#>       line = element_line(colour = "#586e75", size = 0.5, linetype = 1, lineend
-#> = "butt"),
-#>       rect = element_rect(fill = "#002b36", colour = NA),
-#>       text = element_text(colour = "#93a1a1", family = base_family, size = 
-#> base_size),
-#>       axis.text = element_text(colour = "#93a1a1"),
-#>       axis.title = element_text(colour = "#93a1a1"),
-#>       axis.ticks = element_line(colour = "#586e75"),
-#>       axis.line = element_line(colour = "#586e75"),
-#>       panel.background = element_rect(fill = "#002b36", colour = NA),
-#>       panel.border = element_rect(fill = NA, colour = "#586e75"),
-#>       panel.grid.major = element_line(colour = "#073642", size = 0.6),
-#>       panel.grid.minor = element_line(colour = "#073642", size = 0.3),
-#>       strip.background = element_rect(fill = "#073642", colour = NA),
-#>       strip.text = element_text(colour = "#b58900", size = rel(1.1), face = 
+#>       plot.background      = element_rect(fill = solarized_bg, colour = NA),
+#>       panel.background     = element_rect(fill = solarized_bg, colour = NA),
+#>       panel.border         = element_rect(fill = NA, colour = solarized_line, 
+#> size = 0.7),
+#>       panel.grid.major     = element_line(colour = solarized_grid, size=0.4),
+#>       panel.grid.minor     = element_line(colour = solarized_grid, size=0.2),
+#>       axis.text            = element_text(colour = solarized_fg, size = 
+#> rel(0.85)),
+#>       axis.title           = element_text(colour = solarized_fg, size = 
+#> rel(1)),
+#>       axis.ticks           = element_line(colour = solarized_axis),
+#>       axis.line            = element_line(colour = solarized_axis),
+#>       legend.background    = element_rect(fill = solarized_bg, colour = NA),
+#>       legend.key           = element_rect(fill = solarized_bg, colour = NA),
+#>       legend.text          = element_text(colour = solarized_fg),
+#>       legend.title         = element_text(colour = solarized_title, face = 
 #> "bold"),
-#>       legend.background = element_rect(fill = "#002b36", colour = NA),
-#>       legend.key = element_rect(fill = "#002b36", colour = NA),
-#>       legend.text = element_text(colour = "#93a1a1"),
-#>       legend.title = element_text(colour = "#b58900"),
-#>       plot.background = element_rect(fill = "#002b36", colour = NA),
-#>       plot.title = element_text(colour = "#b58900", size = rel(1.2), face = 
+#>       plot.title           = element_text(colour = solarized_title, size = 
+#> rel(1.2), face = "bold", hjust = 0),
+#>       plot.subtitle        = element_text(colour = solarized_title, size = 
+#> rel(1), face = "plain", hjust = 0),
+#>       plot.caption         = element_text(colour = solarized_fg, size = 
+#> rel(0.8), hjust = 1),
+#>       strip.background     = element_rect(fill = solarized_line, colour = NA),
+#>       strip.text           = element_text(colour = solarized_title, face = 
 #> "bold"),
-#>       plot.subtitle = element_text(colour = "#268bd2", size = rel(1.05)),
-#>       plot.caption = element_text(colour = "#586e75", size = rel(0.9)),
-#>       complete = TRUE
+#>       complete             = TRUE
 #>     )
 #> }
 
@@ -88,7 +96,9 @@ R6 Chat is updated. You can then chat with the LLM to have it explain
 the theme or iterate on it.
 
 There’s also a `check_theme()` function that checks if a function is
-actually a ggplot2 theme.
+actually a ggplot2 theme. However, this function only works by actually
+executing the theme, **so it shouldn’t be used as a security measure**.
+I intend to add some contrast checking to that function.
 
 ## Use cases
 
@@ -121,4 +131,6 @@ using the LLM output and never trying to do anything more interesting.
 
 Lastly, for use in Shiny apps, you need to be careful about security.
 Using a hardened system prompt is a good idea if you don’t want people
-doing kooky things in your app.
+doing kooky things in your app. **Currently, use in shiny in production
+is not recommended**, but might be fine for internal apps or prototypes
+if other precautions are taken to keep things low risk.
