@@ -7,8 +7,9 @@
 #' @param chat A `Chat` R6 object from the [ellmer] package
 #' @param theme_prompt A character string describing the desired theme style.
 #' @param image An optional object of class `ellmer::ContentImageInline`, created by calling [`ellmer::content_image_url()`] or similar. The image will be added to the data that is sent to the LLM so it can be referenced in `theme_prompt`.
+#' @param return_type `"function"`, `"expression"`, or `"character"`. Determines the type of object returned. A function is returned by default. See Value.
 #'
-#' @return A function that can be used as a `ggplot2` theme
+#' @return A function that can be used as a `ggplot2` theme. If `return_type` is set to `"expression"` or `"character"`, the raw code is returned instead in those formats instead. This allows the user inspect the code for safety before parsing/evaluating to create the final, usable function.
 #'
 #' @details
 #' The theme description is embedded into a prompt that is sent to the LLM.
@@ -30,11 +31,13 @@
 #' }
 #'
 #' @export
-make_ai_theme <- function(chat, theme_prompt, image = NULL){
+make_ai_theme <- function(chat, theme_prompt, image = NULL, return_type = c('function', 'expression', 'character')){
   if(!inherits(chat, 'Chat')) stop(
     "chat must be an ellmer Chat object",
     call. = FALSE
   )
+
+  return_type <- match.arg(return_type)
 
   prompt_file <- system.file('prompts',
                              'custom-theme-prompt.md',
@@ -56,6 +59,10 @@ make_ai_theme <- function(chat, theme_prompt, image = NULL){
   # Call with optional image arg
   theme_text <- do.call(chat$chat, chat_args)
 
+  if(return_type == 'character') {
+    return(theme_text)
+  }
+
   # intentional side effect: you can chat w/ the LLM about the theme later
   #theme_text <- chat$chat(prompt)
 
@@ -67,6 +74,10 @@ make_ai_theme <- function(chat, theme_prompt, image = NULL){
       stop("LLM response contains disallowed functions: ",
            paste(bad_calls, collapse = ", "),
            call. = FALSE)
+    }
+
+    if(return_type == 'expression') {
+      return(expr)
     }
 
     eval(expr)
