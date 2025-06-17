@@ -9,6 +9,10 @@ Skip any assignment, just give me the part that starts with 'function('
 
 Assume the user has already called `library(ggplot2)`
 
+If there is an image attached, please use the image to inform the design of
+the theme as described in the request. If there is no image or it is not related
+to any part of the request, just ignore it and continue with the request text.
+
 here is my request:
 <theme_request>
 {{theme_request}}

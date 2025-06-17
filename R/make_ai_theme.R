@@ -6,6 +6,7 @@
 #'
 #' @param chat A `Chat` R6 object from the [ellmer] package
 #' @param theme_prompt A character string describing the desired theme style.
+#' @param image An optional object of class `ellmer::ContentImageInline`, created by calling [`ellmer::content_image_url()`] or similar. The image will be added to the data that is sent to the LLM so it can be referenced in `theme_prompt`.
 #'
 #' @return A function that can be used as a `ggplot2` theme
 #'
@@ -29,7 +30,7 @@
 #' }
 #'
 #' @export
-make_ai_theme <- function(chat, theme_prompt){
+make_ai_theme <- function(chat, theme_prompt, image = NULL){
   if(!inherits(chat, 'Chat')) stop(
     "chat must be an ellmer Chat object",
     call. = FALSE
@@ -41,8 +42,22 @@ make_ai_theme <- function(chat, theme_prompt){
 
   prompt <- ellmer::interpolate_file(prompt_file,
                              theme_request = theme_prompt)
+
+  # Build args for chat$chat()
+  chat_args <- list(prompt)
+  if (!is.null(image)) {
+    # add image to the list
+    if (!inherits(image, 'ellmer::ContentImageInline')) {
+      stop("image must be an ellmer_image object", call. = FALSE)
+    }
+    chat_args[[ length(chat_args) + 1 ]] <- image
+  }
+
+  # Call with optional image arg
+  theme_text <- do.call(chat$chat, chat_args)
+
   # intentional side effect: you can chat w/ the LLM about the theme later
-  theme_text <- chat$chat(prompt)
+  #theme_text <- chat$chat(prompt)
 
   theme_function <- tryCatch({
     expr <- parse(text = theme_text)

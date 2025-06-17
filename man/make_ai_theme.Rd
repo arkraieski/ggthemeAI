@@ -4,12 +4,14 @@
 \alias{make_ai_theme}
 \title{Create a ggplot2 Theme Function Using an LLM}
 \usage{
-make_ai_theme(chat, theme_prompt)
+make_ai_theme(chat, theme_prompt, image = NULL)
 }
 \arguments{
 \item{chat}{A \code{Chat} R6 object from the \link{ellmer} package}
 
 \item{theme_prompt}{A character string describing the desired theme style.}
+
+\item{image}{An optional object of class \code{ellmer::ContentImageInline}, created by calling \code{\link[ellmer:content_image_url]{ellmer::content_image_url()}} or similar. The image will be added to the data that is sent to the LLM so it can be referenced in \code{theme_prompt}.}
 }
 \value{
 A function that can be used as a \code{ggplot2} theme
