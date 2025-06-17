@@ -6,14 +6,16 @@
 \usage{
 find_dangerous_calls(
   expr,
-  forbidden = c("system", "system2", "unlink", "download.file")
+  additional_forbidden = NULL,
+  block_namespace_access = TRUE
 )
 }
 \arguments{
 \item{expr}{An R expression or language object, typically returned by \code{\link[base:parse]{base::parse()}}.}
 
-\item{forbidden}{A character vector of function names to flag as disallowed.
-Defaults to \code{c("system", "system2", "unlink", "download.file")}.}
+\item{additional_forbidden}{A character vector of function names to flag as disallowed. These are combined with the vector of function names from \code{\link[=default_dangerous_calls]{default_dangerous_calls()}}}
+
+\item{block_namespace_access}{A logical indicating whether to block namespace access operators (\code{::} and \code{:::}) in the expression.}
 }
 \value{
 A character vector of disallowed function names that were found in the expression.
@@ -41,7 +43,12 @@ find_dangerous_calls(parse(text = "system('ls')"))
 expr <- parse(text = "unlink('file'); system2('echo', 'hi')")
 find_dangerous_calls(expr)
 
+# Using base:: syntax
+find_dangerous_calls(parse(text = "base::system2('echo', 'hi')" ))
+
+# Using namespace access with `::` or `:::`
+find_dangerous_calls(parse(text = 'purr::map(1:3, ~ base::system("echo hi"))'))
+
 # Safe code
 find_dangerous_calls(parse(text = "mean(c(1, 2, 3))"))
-
 }
