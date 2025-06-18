@@ -35,6 +35,9 @@ If the response cannot be parsed as a function, an error is raised.
 
 The full conversation with the LLM remains accessible via the \code{chat} object,
 which may be useful for debugging or iteration.
+
+\strong{Warning:} You \strong{must} set \code{return_type} to \code{"expression"} or \code{"character"}
+if you do not want to run LLM-generated code before review!
 }
 \examples{
 \dontrun{

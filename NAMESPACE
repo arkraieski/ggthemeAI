@@ -3,6 +3,7 @@
 export(check_theme)
 export(default_dangerous_calls)
 export(find_dangerous_calls)
+export(ggplot2_doc_prompt)
 export(ggplot2_news_prompt)
 export(make_ai_theme)
 export(save_function_to_file)
