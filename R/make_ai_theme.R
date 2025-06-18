@@ -19,6 +19,9 @@
 #' The full conversation with the LLM remains accessible via the `chat` object,
 #' which may be useful for debugging or iteration.
 #'
+#' **Warning:** You **must** set `return_type` to `"expression"` or `"character"`
+#' if you do not want to run LLM-generated code before review!
+#'
 #' @examples
 #' \dontrun{
 #' library(ellmer)
