@@ -13,6 +13,11 @@ If there is an image attached, please use the image to inform the design of
 the theme as described in the request. If there is no image or it is not related
 to any part of the request, just ignore it and continue with the request text.
 
+## Requirements
+- Use comments to help understand important parts of the theme. Why are you overriding certain elements?
+- Use the latest ggplot2 best practices. Do not use deprecated features.
+- You must not generate a theme that is just a copy of an existing theme.
+
 here is my request:
 <theme_request>
 {{theme_request}}

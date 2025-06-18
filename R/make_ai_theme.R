@@ -8,6 +8,7 @@
 #' @param theme_prompt A character string describing the desired theme style.
 #' @param image An optional object of class `ellmer::ContentImageInline`, created by calling [`ellmer::content_image_url()`] or similar. The image will be added to the data that is sent to the LLM so it can be referenced in `theme_prompt`.
 #' @param return_type `"function"`, `"expression"`, or `"character"`. Determines the type of object returned. A function is returned by default. See Value.
+#' @param additional_forbidden A character vector of additional function names to block in the generated code. This is useful for adding custom restrictions beyond the default set. The defaults can be seen by running [default_dangerous_calls()]. `::` and `:::` are always blocked, regardless of this argument.
 #'
 #' @return A function that can be used as a `ggplot2` theme. If `return_type` is set to `"expression"` or `"character"`, the raw code is returned instead in those formats instead. This allows the user inspect the code for safety before parsing/evaluating to create the final, usable function.
 #'
@@ -34,7 +35,11 @@
 #' }
 #'
 #' @export
-make_ai_theme <- function(chat, theme_prompt, image = NULL, return_type = c('function', 'expression', 'character')){
+make_ai_theme <- function(chat,
+                          theme_prompt,
+                          image = NULL,
+                          return_type = c('function', 'expression', 'character'),
+                          additional_forbidden = NULL){
   if(!inherits(chat, 'Chat')) stop(
     "chat must be an ellmer Chat object",
     call. = FALSE
@@ -66,13 +71,10 @@ make_ai_theme <- function(chat, theme_prompt, image = NULL, return_type = c('fun
     return(theme_text)
   }
 
-  # intentional side effect: you can chat w/ the LLM about the theme later
-  #theme_text <- chat$chat(prompt)
-
   theme_function <- tryCatch({
     expr <- parse(text = theme_text)
 
-    bad_calls <- find_dangerous_calls(expr)
+    bad_calls <- find_dangerous_calls(expr, additional_forbidden = additional_forbidden)
     if (length(bad_calls)) {
       stop("LLM response contains disallowed functions: ",
            paste(bad_calls, collapse = ", "),
