@@ -53,17 +53,30 @@
 <p>The goal of ggthemeAI is to make it quicker to prototype highly-custom ‘ggplot2’ themes. It uses LLMs to rapidly generate theme functions according to the visual characteristics you describe.</p>
 <p>Imagine some <code>theme_x()</code> function that might look cool. Now, if you can describe it in natural language, you can try a version of it instantly!</p>
 <p>It uses <a href="https://ellmer.tidyverse.org/index.html" class="external-link">ellmer</a> as a chat interface to various LLM providers.</p>
+<p>Note the package is still in development, so the API may change prior to a CRAN release.</p>
+<div class="section level2">
+<h2 id="features">Features<a class="anchor" aria-label="anchor" href="#features"></a>
+</h2>
+<ul>
+<li>
+<code><a href="reference/make_ai_theme.html">make_ai_theme()</a></code>: Create a ggplot2 theme function from a description of the desired theme</li>
+<li>Choose your level of safety: Get a theme function directly, or get an expression that you can inspect before evaluating</li>
+<li>function blacklisting: <code><a href="reference/make_ai_theme.html">make_ai_theme()</a></code> will check the generated theme for dangerous function calls (like <code><a href="https://rdrr.io/r/base/unlink.html" class="external-link">unlink()</a></code>) and warn you if it finds any (to be combined with other safety layers/practices)</li>
+<li>Image input: optionally use ellmer image content functions to add images to the chat</li>
+<li>ggplot2-focused system prompts for ellmer chats</li>
+</ul>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
 <p>You can install the development version of ggthemeAI like so:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">'arkraieski/ggthemeAI'</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pak.html" class="external-link">pak</a></span><span class="op">(</span><span class="st">'arkraieski/ggthemeAI'</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+<h2 id="example-and-basic-usage">Example and basic usage<a class="anchor" aria-label="anchor" href="#example-and-basic-usage"></a>
 </h2>
-<p>This example shows you how to get started creating themes with <code>ggthemeAI</code>. The <code><a href="reference/make_ai_theme.html">make_ai_theme()</a></code> function takes a chat object and a description of the theme you want, and returns a ggplot2 theme function that you can use in your plots.</p>
+<p>This example shows you how to get started creating themes with <code>ggthemeAI</code>. The <code><a href="reference/make_ai_theme.html">make_ai_theme()</a></code> function takes a chat object and a description of the theme you want, and returns code for a ggplot2 theme function.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
@@ -74,70 +87,81 @@
 <span><span class="va">chat</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ellmer.tidyverse.org/reference/chat_openai.html" class="external-link">chat_openai</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># can customize system prompt here if desired</span></span>
 <span><span class="co">#&gt; Using model = "gpt-4.1".</span></span>
 <span></span>
-<span><span class="va">theme_solarized</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_ai_theme.html">make_ai_theme</a></span><span class="op">(</span><span class="va">chat</span>, <span class="st">'solarized dark take on the default ggplot2 theme'</span><span class="op">)</span></span>
+<span><span class="va">theme_expression</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_ai_theme.html">make_ai_theme</a></span><span class="op">(</span><span class="va">chat</span>, </span>
+<span>                                 <span class="st">'solarized dark take on the default ggplot2 theme'</span>,</span>
+<span>                                 return_type <span class="op">=</span> <span class="st">"expression"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(base_size = 11, base_family = "") {</span></span>
-<span><span class="co">#&gt;   solarized_bg   &lt;- "#002b36"</span></span>
-<span><span class="co">#&gt;   solarized_fg   &lt;- "#839496"</span></span>
-<span><span class="co">#&gt;   solarized_line &lt;- "#586e75"</span></span>
-<span><span class="co">#&gt;   solarized_grid &lt;- "#073642"</span></span>
-<span><span class="co">#&gt;   solarized_axis &lt;- "#93a1a1"</span></span>
-<span><span class="co">#&gt;   solarized_title&lt;- "#eee8d5"</span></span>
+<span><span class="co">#&gt;   # Solarized Dark palette</span></span>
+<span><span class="co">#&gt;   bg      &lt;- "#002b36"</span></span>
+<span><span class="co">#&gt;   fg      &lt;- "#839496"</span></span>
+<span><span class="co">#&gt;   grid    &lt;- "#073642"</span></span>
+<span><span class="co">#&gt;   accent  &lt;- "#586e75"</span></span>
+<span><span class="co">#&gt;   white   &lt;- "#fdf6e3"</span></span>
+<span><span class="co">#&gt;   orange  &lt;- "#cb4b16"</span></span>
+<span><span class="co">#&gt;   blue    &lt;- "#268bd2"</span></span>
+<span><span class="co">#&gt;   green   &lt;- "#859900"</span></span>
 <span><span class="co">#&gt; </span></span>
 <span><span class="co">#&gt;   theme_grey(base_size = base_size, base_family = base_family) %+replace%</span></span>
 <span><span class="co">#&gt;     theme(</span></span>
-<span><span class="co">#&gt;       plot.background      = element_rect(fill = solarized_bg, colour = NA),</span></span>
-<span><span class="co">#&gt;       panel.background     = element_rect(fill = solarized_bg, colour = NA),</span></span>
-<span><span class="co">#&gt;       panel.border         = element_rect(fill = NA, colour = solarized_line, </span></span>
-<span><span class="co">#&gt; size = 0.7),</span></span>
-<span><span class="co">#&gt;       panel.grid.major     = element_line(colour = solarized_grid, size=0.4),</span></span>
-<span><span class="co">#&gt;       panel.grid.minor     = element_line(colour = solarized_grid, size=0.2),</span></span>
-<span><span class="co">#&gt;       axis.text            = element_text(colour = solarized_fg, size = </span></span>
-<span><span class="co">#&gt; rel(0.85)),</span></span>
-<span><span class="co">#&gt;       axis.title           = element_text(colour = solarized_fg, size = </span></span>
-<span><span class="co">#&gt; rel(1)),</span></span>
-<span><span class="co">#&gt;       axis.ticks           = element_line(colour = solarized_axis),</span></span>
-<span><span class="co">#&gt;       axis.line            = element_line(colour = solarized_axis),</span></span>
-<span><span class="co">#&gt;       legend.background    = element_rect(fill = solarized_bg, colour = NA),</span></span>
-<span><span class="co">#&gt;       legend.key           = element_rect(fill = solarized_bg, colour = NA),</span></span>
-<span><span class="co">#&gt;       legend.text          = element_text(colour = solarized_fg),</span></span>
-<span><span class="co">#&gt;       legend.title         = element_text(colour = solarized_title, face = </span></span>
-<span><span class="co">#&gt; "bold"),</span></span>
-<span><span class="co">#&gt;       plot.title           = element_text(colour = solarized_title, size = </span></span>
-<span><span class="co">#&gt; rel(1.2), face = "bold", hjust = 0),</span></span>
-<span><span class="co">#&gt;       plot.subtitle        = element_text(colour = solarized_title, size = </span></span>
-<span><span class="co">#&gt; rel(1), face = "plain", hjust = 0),</span></span>
-<span><span class="co">#&gt;       plot.caption         = element_text(colour = solarized_fg, size = </span></span>
-<span><span class="co">#&gt; rel(0.8), hjust = 1),</span></span>
-<span><span class="co">#&gt;       strip.background     = element_rect(fill = solarized_line, colour = NA),</span></span>
-<span><span class="co">#&gt;       strip.text           = element_text(colour = solarized_title, face = </span></span>
-<span><span class="co">#&gt; "bold"),</span></span>
-<span><span class="co">#&gt;       complete             = TRUE</span></span>
+<span><span class="co">#&gt;       line = element_line(colour = fg),</span></span>
+<span><span class="co">#&gt;       rect = element_rect(fill = bg, colour = NA),</span></span>
+<span><span class="co">#&gt;       text = element_text(colour = fg, family = base_family, size = base_size),</span></span>
+<span><span class="co">#&gt;       axis.text = element_text(colour = white),</span></span>
+<span><span class="co">#&gt;       axis.title = element_text(colour = blue, face = "bold"),</span></span>
+<span><span class="co">#&gt;       axis.ticks = element_line(colour = accent),</span></span>
+<span><span class="co">#&gt;       axis.line = element_line(colour = accent),</span></span>
+<span><span class="co">#&gt;       panel.background = element_rect(fill = bg, colour = NA),</span></span>
+<span><span class="co">#&gt;       panel.border = element_rect(colour = accent, fill = NA),</span></span>
+<span><span class="co">#&gt;       panel.grid.major = element_line(colour = grid, size = 0.5),</span></span>
+<span><span class="co">#&gt;       panel.grid.minor = element_line(colour = grid, size = 0.25),</span></span>
+<span><span class="co">#&gt;       plot.background = element_rect(fill = bg, colour = NA),</span></span>
+<span><span class="co">#&gt;       plot.title = element_text(face = "bold", hjust = 0, size = base_size * </span></span>
+<span><span class="co">#&gt; 1.4, colour = orange),</span></span>
+<span><span class="co">#&gt;       plot.subtitle = element_text(hjust = 0, size = base_size * 1.1, colour = </span></span>
+<span><span class="co">#&gt; blue),</span></span>
+<span><span class="co">#&gt;       plot.caption = element_text(hjust = 1, size = base_size * 0.8, colour = </span></span>
+<span><span class="co">#&gt; fg),</span></span>
+<span><span class="co">#&gt;       legend.background = element_rect(fill = bg, colour = NA),</span></span>
+<span><span class="co">#&gt;       legend.key = element_rect(fill = bg, colour = NA),</span></span>
+<span><span class="co">#&gt;       legend.text = element_text(colour = white),</span></span>
+<span><span class="co">#&gt;       legend.title = element_text(colour = orange, face = "bold"),</span></span>
+<span><span class="co">#&gt;       strip.background = element_rect(fill = accent, colour = NA),</span></span>
+<span><span class="co">#&gt;       strip.text = element_text(colour = white, face = "bold"),</span></span>
+<span><span class="co">#&gt;       complete = TRUE</span></span>
 <span><span class="co">#&gt;     )</span></span>
 <span><span class="co">#&gt; }</span></span>
+<span></span>
+<span><span class="co"># in an interactive session, you can/should now inspect the content of theme code</span></span>
+<span><span class="co"># before proceeding</span></span>
+<span><span class="co"># theme_expression</span></span>
+<span></span>
+<span><span class="co"># eval to create the final theme function</span></span>
+<span><span class="va">theme_solarized</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/eval.html" class="external-link">eval</a></span><span class="op">(</span><span class="va">theme_expression</span><span class="op">)</span></span>
 <span></span>
 <span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Horsepower Distribution"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">theme_solarized</span><span class="op">(</span><span class="op">)</span> <span class="co"># LLM wrote the code for this function</span></span></code></pre></div>
+<span>  <span class="fu">theme_solarized</span><span class="op">(</span><span class="op">)</span> <span class="co"># LLM wrote the code for this function</span></span>
+<span><span class="co">#&gt; Warning: The `size` argument of `element_line()` is deprecated as of ggplot2 3.4.0.</span></span>
+<span><span class="co">#&gt; ℹ Please use the `linewidth` argument instead.</span></span>
+<span><span class="co">#&gt; This warning is displayed once every 8 hours.</span></span>
+<span><span class="co">#&gt; Call `lifecycle::last_lifecycle_warnings()` to see where this warning was</span></span>
+<span><span class="co">#&gt; generated.</span></span></code></pre></div>
 <p><img src="reference/figures/README-example-1.png" alt="Histogram of horsepower values showing peaks around 100 and 180 hp.  Bars are gray on a dark background." width="100%"></p>
+<p>If you want to skip the step of evaluating the expression, you can use <code>return_type = "function"</code> (or just omit that argument) to get a function directly. However, this is fundamentally kind of dangerous because you are executing LLM-generated code. However, in a low-risk environment (ideally disposable/isolated like Docker) where all input is trusted, you might be OK with that. (<code><a href="reference/make_ai_theme.html">make_ai_theme()</a></code> does call <code><a href="reference/find_dangerous_calls.html">find_dangerous_calls()</a></code> but there are ways function calls can be constructed/obfuscated to get around that)</p>
 <p>It should be noted that <code><a href="reference/make_ai_theme.html">make_ai_theme()</a></code> is <strong>not</strong> a pure function. This is by design. In addition to return the new theme, the state of the R6 Chat is updated. You can then chat with the LLM to have it explain the theme or iterate on it.</p>
-<p>There’s also a <code><a href="reference/check_theme.html">check_theme()</a></code> function that checks if a function is actually a ggplot2 theme. However, this function only works by actually executing the theme, <strong>so it shouldn’t be used as a security measure</strong>. I intend to add some contrast checking to that function.</p>
+<p>There’s also a <code><a href="reference/check_theme.html">check_theme()</a></code> function that checks if a function is actually a ggplot2 theme. However, this function only works by actually executing the theme, <strong>so it shouldn’t be used as a security measure</strong>. I intend to add some contrast checking to that function if it remains in the package.</p>
 </div>
 <div class="section level2">
 <h2 id="use-cases">Use cases<a class="anchor" aria-label="anchor" href="#use-cases"></a>
 </h2>
 <ul>
-<li>Rapid design and prototyping of custom themes for stylized infographics</li>
+<li>Rapid design and prototyping of highly custom themes for stylized infographics</li>
 <li>Trying out a bunch of drastically different looks quickly</li>
 <li>Starting a custom theme without starting from scratch</li>
 <li>Iterating on themes conversationally</li>
 <li>Learning ggplot2 and improving skills: see working examples of extensively-customized themes and then have the LLM explain it</li>
-<li>Accessibility use cases
-<ul>
-<li>Designing/modifying themes for visually-impaired users</li>
-<li>Shiny: you can let users customize a plot to their perceptual needs in natural language. This can make your app more accessible to everyone but especially low-vision, neurodivergent, and colorblind users (and others surely)</li>
-</ul>
-</li>
+<li>Accessibility use cases: Assistance designing/modifying themes that are accessible to users with low-vision, colorblindness, etc.</li>
 </ul>
 </div>
 <div class="section level2">
