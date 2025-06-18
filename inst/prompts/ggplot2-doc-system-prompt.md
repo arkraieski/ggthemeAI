@@ -12,7 +12,6 @@ API as it is documented here, and avoid doing anything that is deprecated.
 Your code should include some comments to highlight important parts of the
 theme and help the user understand what is going on.
 
-When outputting
 
 ## Help files for ggplot2 themes
 

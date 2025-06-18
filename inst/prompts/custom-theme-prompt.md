@@ -17,6 +17,9 @@ to any part of the request, just ignore it and continue with the request text.
 - Use comments to help understand important parts of the theme. Why are you overriding certain elements?
 - Use the latest ggplot2 best practices. Do not use deprecated features.
 - You must not generate a theme that is just a copy of an existing theme.
+- Colors or other repeated parameters (that aren't arguments of the theme function itself) 
+should be placed in local variables at the top of the function to reduce 
+repetition and make the code easier to read and modify.
 
 here is my request:
 <theme_request>
