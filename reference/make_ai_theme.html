@@ -11,7 +11,7 @@ evaluated, and returned as a usable theme function."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ggthemeAI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9006</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +48,8 @@ evaluated, and returned as a usable theme function.</p>
 <span>  <span class="va">chat</span>,</span>
 <span>  <span class="va">theme_prompt</span>,</span>
 <span>  image <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  return_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"function"</span>, <span class="st">"expression"</span>, <span class="st">"character"</span><span class="op">)</span></span>
+<span>  return_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"function"</span>, <span class="st">"expression"</span>, <span class="st">"character"</span><span class="op">)</span>,</span>
+<span>  additional_forbidden <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -70,6 +71,10 @@ evaluated, and returned as a usable theme function.</p>
 
 <dt id="arg-return-type">return_type<a class="anchor" aria-label="anchor" href="#arg-return-type"></a></dt>
 <dd><p><code>"function"</code>, <code>"expression"</code>, or <code>"character"</code>. Determines the type of object returned. A function is returned by default. See Value.</p></dd>
+
+
+<dt id="arg-additional-forbidden">additional_forbidden<a class="anchor" aria-label="anchor" href="#arg-additional-forbidden"></a></dt>
+<dd><p>A character vector of additional function names to block in the generated code. This is useful for adding custom restrictions beyond the default set. The defaults can be seen by running <code><a href="default_dangerous_calls.html">default_dangerous_calls()</a></code>. <code>::</code> and <code>:::</code> are always blocked, regardless of this argument.</p></dd>
 
 </dl></div>
     <div class="section level2">
