@@ -6,7 +6,7 @@
 #'
 #' @param chat A `Chat` R6 object from the [ellmer] package
 #' @param theme_prompt A character string describing the desired theme style.
-#' @param image An optional object of class `ellmer::ContentImageInline`, created by calling [`ellmer::content_image_url()`] or similar. The image will be added to the data that is sent to the LLM so it can be referenced in `theme_prompt`.
+#' @param image An optional object of class `ellmer::ContentImageInline` or `ellmer::ContentImageRemote`, created by calling [`ellmer::content_image_url()`] or similar. The image will be added to the data that is sent to the LLM so it can be referenced in `theme_prompt`.
 #' @param return_type `"function"`, `"expression"`, or `"character"`. Determines the type of object returned. A function is returned by default. See Value.
 #' @param additional_forbidden A character vector of additional function names to block in the generated code. This is useful for adding custom restrictions beyond the default set. The defaults can be seen by running [default_dangerous_calls()]. `::` and `:::` are always blocked, regardless of this argument.
 #'
@@ -58,7 +58,7 @@ make_ai_theme <- function(chat,
   chat_args <- list(prompt)
   if (!is.null(image)) {
     # add image to the list
-    if (!inherits(image, 'ellmer::ContentImageInline')) {
+    if (!(inherits(image, 'ellmer::ContentImageInline') || inherits(image, 'ellmer::ContentImageRemote'))) {
       stop("image must be an ellmer_image object", call. = FALSE)
     }
     chat_args[[ length(chat_args) + 1 ]] <- image
