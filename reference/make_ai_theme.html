@@ -11,7 +11,7 @@ evaluated, and returned as a usable theme function."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ggthemeAI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9005</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9006</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -83,6 +83,8 @@ The resulting response is expected to be valid R code for a theme function.
 If the response cannot be parsed as a function, an error is raised.</p>
 <p>The full conversation with the LLM remains accessible via the <code>chat</code> object,
 which may be useful for debugging or iteration.</p>
+<p><strong>Warning:</strong> You <strong>must</strong> set <code>return_type</code> to <code>"expression"</code> or <code>"character"</code>
+if you do not want to run LLM-generated code before review!</p>
     </div>
 
     <div class="section level2">
