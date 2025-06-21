@@ -1,6 +1,6 @@
 Package: ggthemeAI
 Title: Create 'ggplot2' Themes with LLMs
-Version: 0.0.0.9008
+Version: 0.0.0.9009
 Authors@R: 
     person("Alex", "Kraieski", , "arkraieski@gmail.com", role = c("aut", "cre"))
 Description: Functions for creating 'ggplot2' theme functions using LLMs.
@@ -14,6 +14,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
 Imports: 
     callr,
-    ellmer
+    ellmer,
+    systemfonts
 Suggests: 
     ggplot2

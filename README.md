@@ -31,6 +31,9 @@ a CRAN release.
 - Image input: optionally use ellmer image content functions to add
   images to the chat
 - ggplot2-focused system prompts for ellmer chats
+- `tool_list_fonts()`: register with your ellmer chats with
+  `chat$register_tool()` so your LLM can see the fonts available in your
+  R session, and use them in themes
 
 ## Installation
 
@@ -60,45 +63,89 @@ chat <- chat_openai() # can customize system prompt here if desired
 theme_expression <- make_ai_theme(chat, 
                                  'solarized dark take on the default ggplot2 theme',
                                  return_type = "expression")
-#> function(base_size = 11, base_family = "") {
-#>   # Solarized Dark palette
-#>   bg      <- "#002b36"
-#>   fg      <- "#839496"
-#>   grid    <- "#073642"
-#>   accent  <- "#586e75"
-#>   white   <- "#fdf6e3"
-#>   orange  <- "#cb4b16"
-#>   blue    <- "#268bd2"
-#>   green   <- "#859900"
+#> function(base_family = "", base_size = 11) {
+#>   # Solarized Dark palette main colors
+#>   bg        <- "#002b36" # base03
+#>   panel_bg  <- "#073642" # base02
+#>   fg        <- "#839496" # base0
+#>   grid      <- "#586e75" # base01
+#>   axis      <- "#93a1a1" # base1
+#>   acc       <- "#b58900" # yellow accent for highlights
+#>   
+#>   # Set standard font sizes relative to base_size
+#>   title_size   <- base_size * 1.2
+#>   axis_title_size <- base_size
+#>   axis_text_size  <- base_size * 0.9
+#>   legend_text_size <- base_size
+#>   legend_title_size <- base_size * 1.05
+#>   strip_text_size  <- base_size * 1.05
+#>   
+#>   theme(
+#>     # Base elements
+#>     text = element_text(family = base_family, 
+#>                         face = "plain", 
+#>                         color = fg, 
+#>                         size = base_size, 
+#>                         lineheight = 0.9),
+#>     
+#>     # Plot background/foreground
+#>     plot.background  = element_rect(fill = bg, color = NA),       # outer plot 
+#> area
+#>     panel.background = element_rect(fill = panel_bg, color = NA), # inner plot 
+#> panel
 #> 
-#>   theme_grey(base_size = base_size, base_family = base_family) %+replace%
-#>     theme(
-#>       line = element_line(colour = fg),
-#>       rect = element_rect(fill = bg, colour = NA),
-#>       text = element_text(colour = fg, family = base_family, size = base_size),
-#>       axis.text = element_text(colour = white),
-#>       axis.title = element_text(colour = blue, face = "bold"),
-#>       axis.ticks = element_line(colour = accent),
-#>       axis.line = element_line(colour = accent),
-#>       panel.background = element_rect(fill = bg, colour = NA),
-#>       panel.border = element_rect(colour = accent, fill = NA),
-#>       panel.grid.major = element_line(colour = grid, size = 0.5),
-#>       panel.grid.minor = element_line(colour = grid, size = 0.25),
-#>       plot.background = element_rect(fill = bg, colour = NA),
-#>       plot.title = element_text(face = "bold", hjust = 0, size = base_size * 
-#> 1.4, colour = orange),
-#>       plot.subtitle = element_text(hjust = 0, size = base_size * 1.1, colour = 
-#> blue),
-#>       plot.caption = element_text(hjust = 1, size = base_size * 0.8, colour = 
-#> fg),
-#>       legend.background = element_rect(fill = bg, colour = NA),
-#>       legend.key = element_rect(fill = bg, colour = NA),
-#>       legend.text = element_text(colour = white),
-#>       legend.title = element_text(colour = orange, face = "bold"),
-#>       strip.background = element_rect(fill = accent, colour = NA),
-#>       strip.text = element_text(colour = white, face = "bold"),
-#>       complete = TRUE
-#>     )
+#>     # Major and minor grid lines in muted color for contrast but not 
+#> distraction
+#>     panel.grid.major = element_line(color = grid, size = 0.5),
+#>     panel.grid.minor = element_line(color = grid, size = 0.25, linetype = 
+#> "dotted"),
+#> 
+#>     # Remove panel border to keep it clean, since background contrast is strong
+#>     panel.border     = element_blank(),
+#>     
+#>     # Axes
+#>     axis.title       = element_text(color = axis, size = axis_title_size, face 
+#> = "bold"),
+#>     axis.text        = element_text(color = fg, size = axis_text_size),
+#>     axis.ticks       = element_line(color = axis, size = 0.5),
+#>     axis.ticks.length= unit(0.2, "cm"),
+#>     axis.line        = element_line(color = axis, size = 0.6),
+#>     
+#>     # Legend
+#>     legend.background = element_rect(fill = bg, color = NA),
+#>     legend.key        = element_rect(fill = panel_bg, color = NA),
+#>     legend.text       = element_text(color = fg, size = legend_text_size),
+#>     legend.title      = element_text(color = acc, size = legend_title_size, 
+#> face = "bold"),
+#> 
+#>     # Titles
+#>     plot.title       = element_text(color = acc, size = title_size, face = 
+#> "bold", hjust = 0),
+#>     plot.subtitle    = element_text(color = fg, size = base_size, face = 
+#> "plain", hjust = 0),
+#>     plot.caption     = element_text(color = grid, size = base_size * 0.9, face 
+#> = "italic", hjust = 1),
+#> 
+#>     # Facet strips
+#>     strip.background = element_rect(fill = grid, color = NA),
+#>     strip.text       = element_text(color = bg, size = strip_text_size, face = 
+#> "bold"),
+#> 
+#>     # Margins around the plot
+#>     plot.margin      = margin(10, 10, 10, 10),
+#>     
+#>     # Remove minor tick marks for cleanliness
+#>     axis.ticks.length.x = NULL,
+#>     axis.ticks.length.y = NULL,
+#>     
+#>     # Remove top/right axes and ticks for a standard ggplot look
+#>     axis.line.y.right  = element_blank(),
+#>     axis.line.x.top    = element_blank(),
+#>     axis.ticks.y.right = element_blank(),
+#>     axis.ticks.x.top   = element_blank()
+#>     
+#>     # You can add more customization for grid, borders, etc. as needed
+#>   )
 #> }
 
 # in an interactive session, you can/should now inspect the content of theme code

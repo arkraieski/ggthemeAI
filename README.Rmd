@@ -32,6 +32,7 @@ Note the package is still in development, so the API may change prior to a CRAN 
 - function blacklisting: `make_ai_theme()` will check the generated theme for dangerous function calls (like `unlink()`) and warn you if it finds any (to be combined with other safety layers/practices)
 - Image input: optionally use ellmer image content functions to add images to the chat
 - ggplot2-focused system prompts for ellmer chats
+- `tool_list_fonts()`: register with your ellmer chats with `chat$register_tool()` so your LLM can see the fonts available in your R session, and use them in themes
 
 
 ## Installation
