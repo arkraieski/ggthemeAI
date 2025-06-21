@@ -11,7 +11,7 @@ evaluated, and returned as a usable theme function."></head><body>
 
     <a class="navbar-brand me-2" href="../index.html">ggthemeAI</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9007</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.0.0.9008</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -66,7 +66,7 @@ evaluated, and returned as a usable theme function.</p>
 
 
 <dt id="arg-image">image<a class="anchor" aria-label="anchor" href="#arg-image"></a></dt>
-<dd><p>An optional object of class <code><a href="https://ellmer.tidyverse.org/reference/Content.html" class="external-link">ellmer::ContentImageInline</a></code>, created by calling <code><a href="https://ellmer.tidyverse.org/reference/content_image_url.html" class="external-link">ellmer::content_image_url()</a></code> or similar. The image will be added to the data that is sent to the LLM so it can be referenced in <code>theme_prompt</code>.</p></dd>
+<dd><p>An optional object of class <code><a href="https://ellmer.tidyverse.org/reference/Content.html" class="external-link">ellmer::ContentImageInline</a></code> or <code><a href="https://ellmer.tidyverse.org/reference/Content.html" class="external-link">ellmer::ContentImageRemote</a></code>, created by calling <code><a href="https://ellmer.tidyverse.org/reference/content_image_url.html" class="external-link">ellmer::content_image_url()</a></code> or similar. The image will be added to the data that is sent to the LLM so it can be referenced in <code>theme_prompt</code>.</p></dd>
 
 
 <dt id="arg-return-type">return_type<a class="anchor" aria-label="anchor" href="#arg-return-type"></a></dt>
@@ -79,7 +79,7 @@ evaluated, and returned as a usable theme function.</p>
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
-    <p>A function that can be used as a <code>ggplot2</code> theme. If <code>return_type</code> is set to <code>"expression"</code> or <code>"character"</code>, the raw code is returned instead in those formats instead. This allows the user inspect the code for safety before parsing/evaluating to create the final, usable function.</p>
+    <p>A function that can be used as a <code>ggplot2</code> theme. If <code>return_type</code> is set to <code>"expression"</code> or <code>"character"</code>, the raw code is returned in those formats instead. This allows the user inspect the code for safety before parsing/evaluating to create the final, usable function.</p>
     </div>
     <div class="section level2">
     <h2 id="details">Details<a class="anchor" aria-label="anchor" href="#details"></a></h2>
