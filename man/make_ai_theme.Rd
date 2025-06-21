@@ -17,14 +17,14 @@ make_ai_theme(
 
 \item{theme_prompt}{A character string describing the desired theme style.}
 
-\item{image}{An optional object of class \code{ellmer::ContentImageInline}, created by calling \code{\link[ellmer:content_image_url]{ellmer::content_image_url()}} or similar. The image will be added to the data that is sent to the LLM so it can be referenced in \code{theme_prompt}.}
+\item{image}{An optional object of class \code{ellmer::ContentImageInline} or \code{ellmer::ContentImageRemote}, created by calling \code{\link[ellmer:content_image_url]{ellmer::content_image_url()}} or similar. The image will be added to the data that is sent to the LLM so it can be referenced in \code{theme_prompt}.}
 
 \item{return_type}{\code{"function"}, \code{"expression"}, or \code{"character"}. Determines the type of object returned. A function is returned by default. See Value.}
 
 \item{additional_forbidden}{A character vector of additional function names to block in the generated code. This is useful for adding custom restrictions beyond the default set. The defaults can be seen by running \code{\link[=default_dangerous_calls]{default_dangerous_calls()}}. \code{::} and \code{:::} are always blocked, regardless of this argument.}
 }
 \value{
-A function that can be used as a \code{ggplot2} theme. If \code{return_type} is set to \code{"expression"} or \code{"character"}, the raw code is returned instead in those formats instead. This allows the user inspect the code for safety before parsing/evaluating to create the final, usable function.
+A function that can be used as a \code{ggplot2} theme. If \code{return_type} is set to \code{"expression"} or \code{"character"}, the raw code is returned in those formats instead. This allows the user inspect the code for safety before parsing/evaluating to create the final, usable function.
 }
 \description{
 Generates a new \code{ggplot2} theme function by prompting a large language model

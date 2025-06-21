@@ -2,40 +2,66 @@
 % Please edit documentation in R/save_function_to_file.R
 \name{save_function_to_file}
 \alias{save_function_to_file}
-\title{Save a Function to a File}
+\alias{save_function_to_file.function}
+\alias{save_function_to_file.expression}
+\alias{save_function_to_file.character}
+\title{Save a Function Definition to a File}
 \usage{
-save_function_to_file(fn, fn_name = NULL, file = NULL)
+save_function_to_file(fn, fn_name, file, ...)
+
+\method{save_function_to_file}{`function`}(fn, fn_name = NULL, file = NULL, ...)
+
+\method{save_function_to_file}{expression}(fn, fn_name, file = NULL, ...)
+
+\method{save_function_to_file}{character}(fn, fn_name, file = NULL, ...)
 }
 \arguments{
-\item{fn}{A function object. This can be any function, including anonymous functions or LLM-generated ones.}
+\item{fn}{The function code to save. Can be a function object, an \code{expression()} containing a function,
+or a character string with valid R function code.}
 
-\item{fn_name}{Optional. A name to assign the function in the output file. If omitted, the function is named
-using the expression passed to \code{fn} (e.g., \code{my_fun}).}
+\item{fn_name}{Required name to assign the function in the output file.}
 
-\item{file}{Optional. The file name to save to. Defaults to \code{"<fn_name>.R"} in the working directory.}
+\item{file}{Optional file name to write to. Defaults to \verb{<fn_name>.R}.}
+
+\item{...}{Passed to class-specific methods.}
 }
 \value{
 Invisibly returns the normalized file path.
 }
 \description{
-Writes the source code of a function to a \code{.R} file in the current working directory.
-The saved file will include the assignment (\verb{name <- function(...)}) so it can be sourced back in.
+Dispatches to a method based on the type of input (\code{function}, \code{expression}, or \code{character}).
+Writes a valid R function definition to a \code{.R} file, assigning it the provided or inferred name.
 }
 \details{
-This is useful for exporting dynamically created or LLM-generated functions,
-such as those created by \code{\link[=make_ai_theme]{make_ai_theme()}}. Only the function's definition is written —
-any captured environment or side objects will not be preserved.
+The expression must contain a function definition, such as \code{expression(function(x) x^2)}.
+If this structure is not detected, an error is raised.
 
-The function is deparsed and written as text, so certain corner cases like primitives or compiled functions
-may not serialize as expected.
+The expression must contain a function definition, such as \code{expression(function(x) x^2)}.
+If this structure is not detected, an error is raised.
+
+The string must parse as valid R code starting with \verb{function(...)}. This method is useful
+when saving LLM-generated code or string-encoded snippets that define a function.
 }
+\section{Methods (by class)}{
+\itemize{
+\item \code{save_function_to_file(`function`)}: Save a function defined as an expression
+
+\item \code{save_function_to_file(expression)}: Save a function defined as an expression
+
+\item \code{save_function_to_file(character)}: Save a function from a character string
+
+}}
 \examples{
 \dontrun{
-my_fun <- function(x) x^2 + 1
-save_function_to_file(my_fun)
+save_function_to_file(expression(function(x) x^2), fn_name = "square")
+}
 
-# Save anonymously created function with a given name
-save_function_to_file(function(x) log(x + 1), fn_name = "logplus1")
+\dontrun{
+save_function_to_file(expression(function(x) x^2), fn_name = "square")
+}
+
+\dontrun{
+save_function_to_file("function(x) log(x + 1)", fn_name = "logplus1")
 }
 
 }

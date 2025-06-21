@@ -33,7 +33,7 @@ and it does not inspect calls constructed dynamically (e.g., via \code{get()} or
 Only syntactic references to function names are detected.
 
 This function is useful in contexts where LLMs or other tools generate R code dynamically,
-and you want to enforce a safety layer before parsing or evaluation.
+and you want to enforce a safety layer before evaluation.
 }
 \examples{
 # Basic example with raw code
