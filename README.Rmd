@@ -118,3 +118,29 @@ It's not guaranteed that the themes produced by this package will:
 Also, it's worth thinking about how custom fonts (and other design choices like that) could enhance your themes, instead of just always using the LLM output and never trying to do anything more interesting.
 
 Lastly, for use in Shiny apps, you need to be careful about security. Using a hardened system prompt is a good idea if you don't want people doing kooky things in your app. **Currently, use in shiny in production is not recommended**, but might be fine for internal apps or prototypes if other precautions are taken to keep things low risk.
+
+## Bonus examples
+
+```{r cyberpunk}
+theme_cyberpunk <- make_ai_theme(chat,
+                                 'cyberpunk neon with Japanese influence')
+
+p <- ggplot(mtcars, aes(x = hp)) + 
+  geom_histogram(binwidth = 25) +
+  labs(title = "Horsepower Distribution")
+
+p + theme_cyberpunk()
+
+```
+
+```{r swiss}
+theme_swiss <- make_ai_theme(chat,
+                                 'minimalist Swiss design')
+p + theme_swiss()
+```
+
+```{r chartjunk}
+theme_chartjunk <- make_ai_theme(chat, 
+                                 'turn the chartjunk level up to 11. people should be genuinely horrified by this chart. there should be tons extra crap everywhere.')
+p + theme_chartjunk()
+```
