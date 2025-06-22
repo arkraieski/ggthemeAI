@@ -49,9 +49,7 @@ This example shows you how to get started creating themes with `ggthemeAI`. The 
 a ggplot2 theme function.
 
 ```{r example}
-#| fig.alt: >
-#|   Histogram of horsepower values showing peaks around 100 and 180 hp. 
-#|   Bars are gray on a dark background.
+#| fig-alt: Histogram of horsepower values showing peaks around 100 and 180 hp.  Bars are gray on a dark background.
 
 
 library(ggplot2)
@@ -85,6 +83,20 @@ dangerous because you are executing LLM-generated code. However, in a low-risk e
 It should be noted that `make_ai_theme()` is **not** a pure function. This is by design. In addition to return the new theme, the state of the R6 Chat is updated. You can then chat with the LLM to have it explain the theme or iterate on it.
 
 There's also a `check_theme()` function that checks if a function is actually a ggplot2 theme. However, this function only works by actually executing the theme, **so it shouldn't be used as a security measure**. I intend to add some contrast checking to that function if it remains in the package.
+
+## System prompts and tools
+
+ggthemeAI also provides a couple system prompts to help give the LLM you're working with extra extra knowledge that may be helpful generating themes for ggplot2. `ggplot2_doc_prompt()` provides a prompt that includes the content of the ggplot2 documentation for themes and elements, and `ggplot2_news_prompt()` provides a prompt that includes the news entries for the current major version of ggplot2 (using the version of the news on your system). Both of these can help the LLM avoid using deprecated/imagined features, and help it understand the ggplot2 theme system better. However, they both will cost extra money, so try to keep chats short.
+
+You can also use the `tool_list_fonts()` function to register a tool with your chat that lists the fonts available in your R session. This can be useful for LLMs to know what fonts are available when generating themes.
+
+So, to set up an ellmer chat that is 'supercharged' (ugh, sorry) for ggplot2 themes, you can do something like this:
+
+```{r setup_chat, eval = FALSE}
+chat <- chat_openai(system_prompt = ggplot2_doc_prompt())
+
+chat$register_tool(tool_list_fonts()) # now LLM can call the function this wraps
+```
 
 ## Use cases
 
