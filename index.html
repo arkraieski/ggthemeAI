@@ -93,65 +93,75 @@
 <span>                                 <span class="st">'solarized dark take on the default ggplot2 theme'</span>,</span>
 <span>                                 return_type <span class="op">=</span> <span class="st">"expression"</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(base_size = 11, base_family = "") {</span></span>
-<span><span class="co">#&gt;   # Define Solarized Dark color palette</span></span>
+<span><span class="co">#&gt;   # Solarized Dark core palette</span></span>
 <span><span class="co">#&gt;   bg        &lt;- "#002b36" # base03</span></span>
-<span><span class="co">#&gt;   panel_bg  &lt;- "#002b36" # base03</span></span>
-<span><span class="co">#&gt;   panel_fg  &lt;- "#586e75" # base01</span></span>
-<span><span class="co">#&gt;   grid_maj  &lt;- "#073642" # base02</span></span>
-<span><span class="co">#&gt;   grid_min  &lt;- "#073642" # base02 (use transparency for min grid)</span></span>
-<span><span class="co">#&gt;   axis_col  &lt;- "#93a1a1" # base1</span></span>
-<span><span class="co">#&gt;   text_col  &lt;- "#eee8d5" # base2</span></span>
-<span><span class="co">#&gt;   title_col &lt;- "#b58900" # yellow</span></span>
-<span><span class="co">#&gt;   subtitle_col &lt;- "#2aa198" # cyan</span></span>
-<span><span class="co">#&gt;   legend_bg &lt;- "#073642" # base02</span></span>
+<span><span class="co">#&gt;   fg        &lt;- "#839496" # base0</span></span>
+<span><span class="co">#&gt;   grid      &lt;- "#073642" # base02</span></span>
+<span><span class="co">#&gt;   axis      &lt;- "#586e75" # base01</span></span>
+<span><span class="co">#&gt;   title_col &lt;- "#93a1a1" # base1</span></span>
+<span><span class="co">#&gt;   tick_col  &lt;- "#839496" # base0</span></span>
+<span><span class="co">#&gt;   panel_bg  &lt;- "#003541" # slightly lighter than bg for panel</span></span>
 <span><span class="co">#&gt;   strip_bg  &lt;- "#073642" # base02</span></span>
-<span><span class="co">#&gt;   strip_fg  &lt;- "#b58900" # yellow</span></span>
-<span><span class="co">#&gt;   facet_fg  &lt;- "#b58900" # yellow</span></span>
-<span><span class="co">#&gt;   </span></span>
-<span><span class="co">#&gt;   # Use the classic theme as a starting point for easier reading vs. theme_grey</span></span>
-<span><span class="co">#&gt;   theme_classic(base_size = base_size, base_family = base_family) %+replace%</span></span>
-<span><span class="co">#&gt;     theme(</span></span>
-<span><span class="co">#&gt;       # Main plot background and panel background</span></span>
-<span><span class="co">#&gt;       plot.background = element_rect(fill = bg, color = NA),</span></span>
-<span><span class="co">#&gt;       panel.background = element_rect(fill = panel_bg, color = NA),</span></span>
-<span><span class="co">#&gt;       # Use contrasting color for text for accessibility</span></span>
-<span><span class="co">#&gt;       text = element_text(color = text_col, size = base_size, family = </span></span>
+<span><span class="co">#&gt;   accent    &lt;- "#b58900" # yellow for emphasis</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   half_line &lt;- base_size / 2</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;   theme(</span></span>
+<span><span class="co">#&gt;     # Base settings</span></span>
+<span><span class="co">#&gt;     line = element_line(colour = fg, linewidth = 0.5, lineend = "round"),</span></span>
+<span><span class="co">#&gt;     rect = element_rect(fill = bg, colour = NA),</span></span>
+<span><span class="co">#&gt;     text = element_text(family = base_family, face = "plain",</span></span>
+<span><span class="co">#&gt;                         colour = fg, size = base_size, lineheight = 0.9, hjust </span></span>
+<span><span class="co">#&gt; = 0.5, vjust = 0.5),</span></span>
+<span><span class="co">#&gt;     # Plot background</span></span>
+<span><span class="co">#&gt;     plot.background = element_rect(fill = bg, colour = NA),</span></span>
+<span><span class="co">#&gt;     panel.background = element_rect(fill = panel_bg, colour = NA),</span></span>
+<span><span class="co">#&gt;     # Panel grid</span></span>
+<span><span class="co">#&gt;     panel.grid.major = element_line(colour = grid, linewidth = 0.65),</span></span>
+<span><span class="co">#&gt;     panel.grid.minor = element_line(colour = grid, linewidth = 0.3),</span></span>
+<span><span class="co">#&gt;     # Panel border</span></span>
+<span><span class="co">#&gt;     panel.border = element_blank(), # Leave border off for minimalist look</span></span>
+<span><span class="co">#&gt;     # Axes</span></span>
+<span><span class="co">#&gt;     axis.ticks = element_line(colour = tick_col, linewidth = 0.4),</span></span>
+<span><span class="co">#&gt;     axis.ticks.length = unit(half_line / 2, "pt"),</span></span>
+<span><span class="co">#&gt;     axis.line = element_line(linewidth = 0.7, colour = axis),</span></span>
+<span><span class="co">#&gt;     axis.text = element_text(size = rel(0.85), colour = fg, family = </span></span>
 <span><span class="co">#&gt; base_family),</span></span>
-<span><span class="co">#&gt;       # Titles with solarized accent</span></span>
-<span><span class="co">#&gt;       plot.title = element_text(color = title_col, size = rel(1.25), face = </span></span>
-<span><span class="co">#&gt; "bold", hjust = 0.0),</span></span>
-<span><span class="co">#&gt;       plot.subtitle = element_text(color = subtitle_col, size = rel(1.05), </span></span>
-<span><span class="co">#&gt; hjust = 0.0),</span></span>
-<span><span class="co">#&gt;       plot.caption = element_text(color = panel_fg, size = rel(0.85), hjust = </span></span>
-<span><span class="co">#&gt; 1, margin = margin(t = 8)),</span></span>
-<span><span class="co">#&gt;       # Axis lines &amp; ticks for contrast</span></span>
-<span><span class="co">#&gt;       axis.title = element_text(color = axis_col, size = rel(1.1)),</span></span>
-<span><span class="co">#&gt;       axis.text = element_text(color = axis_col),</span></span>
-<span><span class="co">#&gt;       axis.line = element_line(color = axis_col, linewidth = 0.5),</span></span>
-<span><span class="co">#&gt;       axis.ticks = element_line(color = axis_col, linewidth = 0.4),</span></span>
-<span><span class="co">#&gt;       # Major &amp; minor grid lines subtly present</span></span>
-<span><span class="co">#&gt;       panel.grid.major = element_line(color = grid_maj, linewidth = 0.5),</span></span>
-<span><span class="co">#&gt;       panel.grid.minor = element_line(color = grid_min, linewidth = 0.25, </span></span>
-<span><span class="co">#&gt; linetype = "dotted"),</span></span>
-<span><span class="co">#&gt;       # Remove minor grid if not desired</span></span>
-<span><span class="co">#&gt;       # panel.grid.minor = element_blank(),</span></span>
-<span><span class="co">#&gt;       # Legend styling</span></span>
-<span><span class="co">#&gt;       legend.background = element_rect(fill = legend_bg, color = NA),</span></span>
-<span><span class="co">#&gt;       legend.key = element_rect(fill = legend_bg, color = NA),</span></span>
-<span><span class="co">#&gt;       legend.text = element_text(color = panel_fg),</span></span>
-<span><span class="co">#&gt;       legend.title = element_text(color = title_col, face = "bold"),</span></span>
-<span><span class="co">#&gt;       # Facet strip (for facet_wrap/ facet_grid)</span></span>
-<span><span class="co">#&gt;       strip.background = element_rect(fill = strip_bg, color = NA),</span></span>
-<span><span class="co">#&gt;       strip.text = element_text(color = strip_fg, face = "bold"),</span></span>
-<span><span class="co">#&gt;       # Remove axis ticks length for a modern look</span></span>
-<span><span class="co">#&gt;       axis.ticks.length = unit(5, "pt"),</span></span>
-<span><span class="co">#&gt;       # Remove panel border for a flat, modern look</span></span>
-<span><span class="co">#&gt;       panel.border = element_blank(),</span></span>
-<span><span class="co">#&gt;       # Margins</span></span>
-<span><span class="co">#&gt;       plot.margin = margin(11, 11, 11, 11),</span></span>
-<span><span class="co">#&gt;       # Avoid grey grid in legend</span></span>
-<span><span class="co">#&gt;       legend.box.background = element_blank()</span></span>
-<span><span class="co">#&gt;     )</span></span>
+<span><span class="co">#&gt;     axis.title = element_text(size = rel(1.1), colour = fg, family = </span></span>
+<span><span class="co">#&gt; base_family),</span></span>
+<span><span class="co">#&gt;     axis.title.x = element_text(margin = margin(t = half_line / 2), vjust = 1),</span></span>
+<span><span class="co">#&gt;     axis.title.y = element_text(margin = margin(r = half_line / 2), angle = 90,</span></span>
+<span><span class="co">#&gt; vjust = 1),</span></span>
+<span><span class="co">#&gt;     # Strip (facet) settings</span></span>
+<span><span class="co">#&gt;     strip.background = element_rect(fill = strip_bg, colour = NA),</span></span>
+<span><span class="co">#&gt;     strip.text = element_text(size = rel(1.0), colour = accent, face = "bold"),</span></span>
+<span><span class="co">#&gt;     # Legend</span></span>
+<span><span class="co">#&gt;     legend.background = element_rect(fill = bg, colour = NA),</span></span>
+<span><span class="co">#&gt;     legend.key = element_rect(fill = panel_bg, colour = NA),</span></span>
+<span><span class="co">#&gt;     legend.text = element_text(colour = fg, size = rel(0.9)),</span></span>
+<span><span class="co">#&gt;     legend.title = element_text(colour = accent, size = rel(1.05), face = </span></span>
+<span><span class="co">#&gt; "bold"),</span></span>
+<span><span class="co">#&gt;     legend.position = "right",</span></span>
+<span><span class="co">#&gt;     # Titles</span></span>
+<span><span class="co">#&gt;     plot.title = element_text(</span></span>
+<span><span class="co">#&gt;       colour = title_col, face = "bold", size = rel(1.3),</span></span>
+<span><span class="co">#&gt;       hjust = 0, vjust = 1, margin = margin(b = half_line)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.subtitle = element_text(</span></span>
+<span><span class="co">#&gt;       colour = title_col, size = rel(1.05),</span></span>
+<span><span class="co">#&gt;       hjust = 0, vjust = 1, margin = margin(b = half_line / 2)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.caption = element_text(</span></span>
+<span><span class="co">#&gt;       colour = axis, size = rel(0.85),</span></span>
+<span><span class="co">#&gt;       hjust = 1, vjust = 1, margin = margin(t = half_line / 2)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.margin = margin(half_line, half_line, half_line, half_line),</span></span>
+<span><span class="co">#&gt;     # Remove minor tick lines for clarity on dark backgrounds</span></span>
+<span><span class="co">#&gt;     axis.ticks.y.right = element_blank(),</span></span>
+<span><span class="co">#&gt;     axis.ticks.x.top = element_blank(),</span></span>
+<span><span class="co">#&gt;     # Make sure there is sufficient contrast and clarity</span></span>
+<span><span class="co">#&gt;     complete = TRUE</span></span>
+<span><span class="co">#&gt;   )</span></span>
 <span><span class="co">#&gt; }</span></span>
 <span></span>
 <span><span class="co"># in an interactive session, you can/should now inspect the content of theme code</span></span>
@@ -212,453 +222,291 @@
 <code class="sourceCode R"><span><span class="va">theme_cyberpunk</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_ai_theme.html">make_ai_theme</a></span><span class="op">(</span><span class="va">chat</span>,</span>
 <span>                                 <span class="st">'cyberpunk neon with Japanese influence'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(base_size = 12, base_family = "") {</span></span>
-<span><span class="co">#&gt;   # Cyberpunk-inspired neon color palette with Japanese influence</span></span>
-<span><span class="co">#&gt;   bg_color         &lt;- "#181726"   # deep twilight purple as plot background</span></span>
-<span><span class="co">#&gt;   panel_bg_color   &lt;- "#232032"   # slightly lighter for panel background</span></span>
-<span><span class="co">#&gt;   grid_major_col   &lt;- "#3c3a69"   # dim blue-violet for primary grid</span></span>
-<span><span class="co">#&gt;   grid_minor_col   &lt;- "#222156"   # almost indigo for minor grid</span></span>
-<span><span class="co">#&gt;   axis_line_col    &lt;- "#f5f5f7"   # nearly white for sharp contrast</span></span>
-<span><span class="co">#&gt;   axis_text_col    &lt;- "#F9F6EE"   # very light ivory</span></span>
-<span><span class="co">#&gt;   axis_title_col   &lt;- "#F6019D"   # neon magenta/pink for major accent</span></span>
-<span><span class="co">#&gt;   title_col        &lt;- "#00ffe7"   # neon aqua/cyan for titles</span></span>
-<span><span class="co">#&gt;   subtitle_col     &lt;- "#ffdc57"   # neon yellow for subtitle</span></span>
-<span><span class="co">#&gt;   caption_col      &lt;- "#a599e9"   # soft neon lavender for captions</span></span>
-<span><span class="co">#&gt;   legend_bg_col    &lt;- "#181726"   # match plot bg</span></span>
-<span><span class="co">#&gt;   legend_key_col   &lt;- "#232032"   # panel bg</span></span>
-<span><span class="co">#&gt;   legend_title_col &lt;- "#F6019D"</span></span>
-<span><span class="co">#&gt;   legend_text_col  &lt;- "#ffdc57"</span></span>
-<span><span class="co">#&gt;   strip_bg_col     &lt;- "#3c3a69"   # blue-violet as facet strip background</span></span>
-<span><span class="co">#&gt;   strip_fg_col     &lt;- "#fff"      # pure white for strip text</span></span>
+<span><span class="co">#&gt;   # Core neon cyberpunk palette + Japanese influence</span></span>
+<span><span class="co">#&gt;   bg_dark        &lt;- "#16151a" # Near-black deep violet</span></span>
+<span><span class="co">#&gt;   fg_light       &lt;- "#ececec" # Off-white for highly readable text</span></span>
+<span><span class="co">#&gt;   neon_pink      &lt;- "#ff46c8" # Neon magenta</span></span>
+<span><span class="co">#&gt;   neon_cyan      &lt;- "#00fff5"</span></span>
+<span><span class="co">#&gt;   neon_yellow    &lt;- "#fff700"</span></span>
+<span><span class="co">#&gt;   accent_red     &lt;- "#ff5959" # Neon red, Japan rising sun accent</span></span>
+<span><span class="co">#&gt;   grid_col       &lt;- "#2c2a34" # Subtle grid lines</span></span>
+<span><span class="co">#&gt;   axis_col       &lt;- neon_cyan  # Neon cyan for key lines</span></span>
+<span><span class="co">#&gt;   title_col      &lt;- neon_pink  # For titles/headings</span></span>
+<span><span class="co">#&gt;   subtitle_col   &lt;- neon_cyan</span></span>
+<span><span class="co">#&gt;   strip_bg       &lt;- "#22202d"  # Slightly lighter than bg</span></span>
+<span><span class="co">#&gt;   legend_bg      &lt;- "#1b1923"</span></span>
+<span><span class="co">#&gt;   panel_border   &lt;- neon_yellow</span></span>
+<span><span class="co">#&gt;   half_line      &lt;- base_size / 2</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   # Optional: subtle Japanese touch, e.g. dotted grid lines evoke Tokyo neon </span></span>
-<span><span class="co">#&gt; streets</span></span>
-<span><span class="co">#&gt;   base_family_jp &lt;- if (base_family == "") "Noto Sans JP" else base_family</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   theme_minimal(base_size = base_size, base_family = base_family_jp) %+replace%</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     theme(</span></span>
-<span><span class="co">#&gt;       # Backgrounds</span></span>
-<span><span class="co">#&gt;       plot.background      = element_rect(fill = bg_color, color = NA),</span></span>
-<span><span class="co">#&gt;       panel.background     = element_rect(fill = panel_bg_color, color = NA),</span></span>
-<span><span class="co">#&gt;       # Text colors &amp; fonts</span></span>
-<span><span class="co">#&gt;       text                 = element_text(color = axis_text_col, family = </span></span>
-<span><span class="co">#&gt; base_family_jp),</span></span>
-<span><span class="co">#&gt;       plot.title           = element_text(color = title_col, face = "bold", </span></span>
-<span><span class="co">#&gt; size = rel(1.7), </span></span>
-<span><span class="co">#&gt;                                           margin = margin(b = 12), </span></span>
-<span><span class="co">#&gt;                                           family = base_family_jp, hjust = 0),</span></span>
-<span><span class="co">#&gt;       plot.subtitle        = element_text(color = subtitle_col, face = "plain",</span></span>
-<span><span class="co">#&gt; size = rel(1.15), </span></span>
-<span><span class="co">#&gt;                                           margin = margin(b = 16), </span></span>
-<span><span class="co">#&gt;                                           family = base_family_jp),</span></span>
-<span><span class="co">#&gt;       plot.caption         = element_text(color = caption_col, size = rel(0.9),</span></span>
-<span><span class="co">#&gt; hjust = 1, </span></span>
-<span><span class="co">#&gt;                                           margin = margin(t = 10)),</span></span>
-<span><span class="co">#&gt;       axis.title           = element_text(color = axis_title_col, face = </span></span>
-<span><span class="co">#&gt; "bold", size = rel(1.2)),</span></span>
-<span><span class="co">#&gt;       axis.text            = element_text(color = axis_text_col, size = </span></span>
+<span><span class="co">#&gt;   theme(</span></span>
+<span><span class="co">#&gt;     # Base</span></span>
+<span><span class="co">#&gt;     line = element_line(colour = fg_light, linewidth = 0.6, lineend = "round"),</span></span>
+<span><span class="co">#&gt;     rect = element_rect(fill = bg_dark, colour = NA),</span></span>
+<span><span class="co">#&gt;     text = element_text(family = base_family, colour = fg_light, size = </span></span>
+<span><span class="co">#&gt; base_size),</span></span>
+<span><span class="co">#&gt;     # Plot background</span></span>
+<span><span class="co">#&gt;     plot.background = element_rect(fill = bg_dark, colour = NA),</span></span>
+<span><span class="co">#&gt;     panel.background = element_rect(fill = bg_dark, colour = NA),</span></span>
+<span><span class="co">#&gt;     # Neon accent panel border</span></span>
+<span><span class="co">#&gt;     panel.border = element_rect(colour = panel_border, fill = NA, linewidth = </span></span>
+<span><span class="co">#&gt; 1.3),</span></span>
+<span><span class="co">#&gt;     # Grid lines (faint, not to overpower neon lines)</span></span>
+<span><span class="co">#&gt;     panel.grid.major = element_line(colour = grid_col, linewidth = 0.45),</span></span>
+<span><span class="co">#&gt;     panel.grid.minor = element_line(colour = grid_col, linewidth = 0.19),</span></span>
+<span><span class="co">#&gt;     # Axes: Neon cyan lines and ticks</span></span>
+<span><span class="co">#&gt;     axis.line = element_line(colour = axis_col, linewidth = 1.1),</span></span>
+<span><span class="co">#&gt;     axis.ticks = element_line(colour = neon_yellow, linewidth = 0.7),</span></span>
+<span><span class="co">#&gt;     axis.ticks.length = unit(half_line / 2, "pt"),</span></span>
+<span><span class="co">#&gt;     axis.text = element_text(colour = fg_light, family = base_family, size = </span></span>
 <span><span class="co">#&gt; rel(1)),</span></span>
-<span><span class="co">#&gt;       # Axis lines and ticks</span></span>
-<span><span class="co">#&gt;       axis.line            = element_line(color = axis_line_col, linewidth = </span></span>
-<span><span class="co">#&gt; 0.8),</span></span>
-<span><span class="co">#&gt;       axis.ticks           = element_line(color = axis_title_col, linewidth = </span></span>
-<span><span class="co">#&gt; 0.5),</span></span>
-<span><span class="co">#&gt;       axis.ticks.length    = unit(7, "pt"),</span></span>
-<span><span class="co">#&gt;       # Neon accent grid lines, dotted for cyberpunk effect</span></span>
-<span><span class="co">#&gt;       panel.grid.major     = element_line(color = grid_major_col, linewidth = </span></span>
-<span><span class="co">#&gt; 0.7, linetype = "dotted"),</span></span>
-<span><span class="co">#&gt;       panel.grid.minor     = element_line(color = grid_minor_col, linewidth = </span></span>
-<span><span class="co">#&gt; 0.35, linetype = "dotted"),</span></span>
-<span><span class="co">#&gt;       # Remove panel border for a cleaner luminous look</span></span>
-<span><span class="co">#&gt;       panel.border         = element_blank(),</span></span>
-<span><span class="co">#&gt;       # Legend neon styling</span></span>
-<span><span class="co">#&gt;       legend.background    = element_rect(fill = legend_bg_col, color = NA),</span></span>
-<span><span class="co">#&gt;       legend.key           = element_rect(fill = legend_key_col, color = NA),</span></span>
-<span><span class="co">#&gt;       legend.title         = element_text(color = legend_title_col, size = </span></span>
-<span><span class="co">#&gt; rel(1.1), face = "bold"),</span></span>
-<span><span class="co">#&gt;       legend.text          = element_text(color = legend_text_col, size = </span></span>
-<span><span class="co">#&gt; rel(0.95)),</span></span>
-<span><span class="co">#&gt;       # Faceting - glowing strip</span></span>
-<span><span class="co">#&gt;       strip.background     = element_rect(fill = strip_bg_col, color = NA),</span></span>
-<span><span class="co">#&gt;       strip.text           = element_text(color = strip_fg_col, family = </span></span>
-<span><span class="co">#&gt; base_family_jp, </span></span>
-<span><span class="co">#&gt;                                           face = "bold", size = rel(1.15)),</span></span>
-<span><span class="co">#&gt;       # Margins for floating-in-dark appearance</span></span>
-<span><span class="co">#&gt;       plot.margin          = margin(18, 16, 18, 16),</span></span>
-<span><span class="co">#&gt;       # Remove minor grid on y for slightly less clutter</span></span>
-<span><span class="co">#&gt;       panel.grid.minor.y   = element_blank(),</span></span>
-<span><span class="co">#&gt;       # Keep legend box background transparent</span></span>
-<span><span class="co">#&gt;       legend.box.background = element_blank()</span></span>
-<span><span class="co">#&gt;       # You may optionally add stylized Japanese text (e.g., grid labels or </span></span>
-<span><span class="co">#&gt; watermark), but that's data, not theme.</span></span>
-<span><span class="co">#&gt;     )</span></span>
+<span><span class="co">#&gt;     axis.title = element_text(colour = neon_cyan, family = base_family, size = </span></span>
+<span><span class="co">#&gt; rel(1.18), face = "bold"),</span></span>
+<span><span class="co">#&gt;     axis.title.x = element_text(margin = margin(t = half_line / 2), vjust = 1),</span></span>
+<span><span class="co">#&gt;     axis.title.y = element_text(margin = margin(r = half_line / 2), angle = 90,</span></span>
+<span><span class="co">#&gt; vjust = 1),</span></span>
+<span><span class="co">#&gt;     # Titles: Neon pink and cyan, inspired by Japanese vaporwave</span></span>
+<span><span class="co">#&gt;     plot.title = element_text(</span></span>
+<span><span class="co">#&gt;       colour = title_col, face = "bold", family = base_family, size = rel(1.7),</span></span>
+<span><span class="co">#&gt;       hjust = 0, margin = margin(b = half_line * 0.7)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.subtitle = element_text(</span></span>
+<span><span class="co">#&gt;       colour = subtitle_col, family = base_family, size = rel(1.07),</span></span>
+<span><span class="co">#&gt;       hjust = 0, margin = margin(b = half_line * 0.5)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.caption = element_text(</span></span>
+<span><span class="co">#&gt;       colour = fg_light, family = base_family, size = rel(0.78),</span></span>
+<span><span class="co">#&gt;       hjust = 1, margin = margin(t = half_line * 0.7)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.margin = margin(half_line, half_line, half_line, half_line),</span></span>
+<span><span class="co">#&gt;     # Legend - subtle background, neon title</span></span>
+<span><span class="co">#&gt;     legend.background = element_rect(fill = legend_bg, colour = NA),</span></span>
+<span><span class="co">#&gt;     legend.key = element_rect(fill = bg_dark, colour = NA),</span></span>
+<span><span class="co">#&gt;     legend.text = element_text(colour = fg_light, size = rel(0.94)),</span></span>
+<span><span class="co">#&gt;     legend.title = element_text(colour = neon_pink, face = "bold", size = </span></span>
+<span><span class="co">#&gt; rel(1.07)),</span></span>
+<span><span class="co">#&gt;     legend.position = "right",</span></span>
+<span><span class="co">#&gt;     # Faceting strips - subtle, neon border, Japanese pop touch with red txt</span></span>
+<span><span class="co">#&gt;     strip.background = element_rect(fill = strip_bg, colour = neon_cyan, </span></span>
+<span><span class="co">#&gt; linewidth = 1.2),</span></span>
+<span><span class="co">#&gt;     strip.text = element_text(</span></span>
+<span><span class="co">#&gt;       colour = accent_red, face = "bold", family = base_family, size = </span></span>
+<span><span class="co">#&gt; rel(1.12)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     # No shadows or blurs (hard to achieve in ggplot2), but use neon pops on </span></span>
+<span><span class="co">#&gt; key lines/text</span></span>
+<span><span class="co">#&gt;     # Remove minor axis ticks for clarity</span></span>
+<span><span class="co">#&gt;     axis.ticks.y.right = element_blank(),</span></span>
+<span><span class="co">#&gt;     axis.ticks.x.top = element_blank(),</span></span>
+<span><span class="co">#&gt;     # Remove classic box for a floating neon panel feel</span></span>
+<span><span class="co">#&gt;     panel.ontop = FALSE,</span></span>
+<span><span class="co">#&gt;     # Complete theme specification</span></span>
+<span><span class="co">#&gt;     complete = TRUE</span></span>
+<span><span class="co">#&gt;   )</span></span>
 <span><span class="co">#&gt; }</span></span>
 <span></span>
 <span><span class="va">p</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="va">mtcars</span>, <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">hp</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_histogram.html" class="external-link">geom_histogram</a></span><span class="op">(</span>binwidth <span class="op">=</span> <span class="fl">25</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>title <span class="op">=</span> <span class="st">"Horsepower Distribution"</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">p</span> <span class="op">+</span> <span class="fu">theme_cyberpunk</span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could</span></span>
-<span><span class="co">#&gt; be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :</span></span>
-<span><span class="co">#&gt; Unable to calculate text width/height (using zero)</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span>
-<span><span class="co">#&gt; Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no</span></span>
-<span><span class="co">#&gt; font could be found for family "Noto Sans JP"</span></span></code></pre></div>
+<span><span class="va">p</span> <span class="op">+</span> <span class="fu">theme_cyberpunk</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-cyberpunk-1.png" width="100%"></p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">theme_swiss</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_ai_theme.html">make_ai_theme</a></span><span class="op">(</span><span class="va">chat</span>,</span>
 <span>                                 <span class="st">'minimalist Swiss design'</span><span class="op">)</span></span>
 <span><span class="co">#&gt; function(base_size = 12, base_family = "") {</span></span>
-<span><span class="co">#&gt;   # Minimalist Swiss design relies on clarity, strong contrast, generous </span></span>
-<span><span class="co">#&gt; whitespace, and asymmetric composition.</span></span>
-<span><span class="co">#&gt;   # Use mostly black, white, and a bold accent (classic Swiss red).</span></span>
-<span><span class="co">#&gt;   bg_color         &lt;- "#FFFFFF"   # pure white background</span></span>
-<span><span class="co">#&gt;   panel_bg_color   &lt;- "#FFFFFF"   # panels seamlessly match the plot background</span></span>
-<span><span class="co">#&gt;   grid_major_col   &lt;- "#E0E0E0"   # light gray major grid for reference but not</span></span>
-<span><span class="co">#&gt; distraction</span></span>
-<span><span class="co">#&gt;   grid_minor_col   &lt;- "#F5F5F5"   # even lighter minor grid</span></span>
-<span><span class="co">#&gt;   axis_col         &lt;- "#222222"   # dark gray (not pure black) for axis text </span></span>
-<span><span class="co">#&gt; and lines for a softer look</span></span>
-<span><span class="co">#&gt;   title_col        &lt;- "#D40000"   # classic Swiss red for high impact (used for</span></span>
-<span><span class="co">#&gt; main title)</span></span>
-<span><span class="co">#&gt;   subtitle_col     &lt;- "#555555"   # muted dark gray for subtitle</span></span>
-<span><span class="co">#&gt;   caption_col      &lt;- "#AAAAAA"   # very soft gray for caption</span></span>
-<span><span class="co">#&gt;   strip_bg_col     &lt;- "#FFFFFF"   # faceting strips should blend in</span></span>
-<span><span class="co">#&gt;   strip_fg_col     &lt;- "#D40000"   # Swiss red for strip text</span></span>
-<span><span class="co">#&gt;   legend_bg_col    &lt;- "#FFFFFF"   # legend box matches the background</span></span>
-<span><span class="co">#&gt;   legend_text_col  &lt;- "#222222"</span></span>
-<span><span class="co">#&gt;   legend_title_col &lt;- "#222222"</span></span>
+<span><span class="co">#&gt;   # Minimalist Swiss Design palette and element choices</span></span>
+<span><span class="co">#&gt;   bg_white      &lt;- "#FFFFFF"   # clean white bg</span></span>
+<span><span class="co">#&gt;   fg_black      &lt;- "#222222"   # very dark gray for high contrast text</span></span>
+<span><span class="co">#&gt;   grid_major    &lt;- "#E0E0E0"   # light gray grid lines</span></span>
+<span><span class="co">#&gt;   grid_minor    &lt;- "#F5F5F5"   # very faint for minor grid</span></span>
+<span><span class="co">#&gt;   accent_red    &lt;- "#E30613"   # Swiss red for subtle emphasis</span></span>
+<span><span class="co">#&gt;   half_line     &lt;- base_size / 2</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   theme_minimal(base_size = base_size, base_family = base_family) %+replace%</span></span>
-<span><span class="co">#&gt;     theme(</span></span>
-<span><span class="co">#&gt;       # Backgrounds are intentionally flat white to emphasize clarity and grid</span></span>
-<span><span class="co">#&gt;       plot.background      = element_rect(fill = bg_color, color = NA),</span></span>
-<span><span class="co">#&gt;       panel.background     = element_rect(fill = panel_bg_color, color = NA),</span></span>
-<span><span class="co">#&gt;       # Grid lines: clear, light, do not dominate the scene</span></span>
-<span><span class="co">#&gt;       panel.grid.major     = element_line(color = grid_major_col, linewidth = </span></span>
-<span><span class="co">#&gt; 0.5),</span></span>
-<span><span class="co">#&gt;       panel.grid.minor     = element_line(color = grid_minor_col, linewidth = </span></span>
-<span><span class="co">#&gt; 0.25),</span></span>
-<span><span class="co">#&gt;       # Remove all panel borders for cleanliness</span></span>
-<span><span class="co">#&gt;       panel.border         = element_blank(),</span></span>
-<span><span class="co">#&gt;       # Titles and subtitles: strong and clear, with bold Swiss red accent for </span></span>
-<span><span class="co">#&gt; the title</span></span>
-<span><span class="co">#&gt;       plot.title           = element_text(color = title_col, face = "bold", </span></span>
-<span><span class="co">#&gt; size = rel(1.8),</span></span>
-<span><span class="co">#&gt;                                           margin = margin(b = 10), hjust = 0, </span></span>
+<span><span class="co">#&gt;   theme(</span></span>
+<span><span class="co">#&gt;     # Basic element setup, lean sans family recommended for Swiss style</span></span>
+<span><span class="co">#&gt;     line = element_line(colour = fg_black, linewidth = 0.5, lineend = </span></span>
+<span><span class="co">#&gt; "square"),</span></span>
+<span><span class="co">#&gt;     rect = element_rect(fill = bg_white, colour = NA),</span></span>
+<span><span class="co">#&gt;     text = element_text(</span></span>
+<span><span class="co">#&gt;       family = base_family, face = "plain",</span></span>
+<span><span class="co">#&gt;       colour = fg_black, size = base_size, lineheight = 1, hjust = 0</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Minimalist plot and panel backgrounds</span></span>
+<span><span class="co">#&gt;     plot.background  = element_rect(fill = bg_white, colour = NA),</span></span>
+<span><span class="co">#&gt;     panel.background = element_rect(fill = bg_white, colour = NA),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Use only horizontal grid lines for visual rhythm, drop minor details</span></span>
+<span><span class="co">#&gt;     panel.grid.major.x = element_blank(),</span></span>
+<span><span class="co">#&gt;     panel.grid.major.y = element_line(colour = grid_major, linewidth = 0.5),</span></span>
+<span><span class="co">#&gt;     panel.grid.minor.x = element_blank(),</span></span>
+<span><span class="co">#&gt;     panel.grid.minor.y = element_line(colour = grid_minor, linewidth = 0.3),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # No panel borders or axes lines for ultra-clean page</span></span>
+<span><span class="co">#&gt;     panel.border = element_blank(),</span></span>
+<span><span class="co">#&gt;     axis.line    = element_blank(),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Axis ticks: simple, minimal</span></span>
+<span><span class="co">#&gt;     axis.ticks        = element_blank(),</span></span>
+<span><span class="co">#&gt;     axis.text         = element_text(size = rel(0.92), colour = fg_black, </span></span>
 <span><span class="co">#&gt; family = base_family),</span></span>
-<span><span class="co">#&gt;       plot.subtitle        = element_text(color = subtitle_col, size = </span></span>
-<span><span class="co">#&gt; rel(1.2),</span></span>
-<span><span class="co">#&gt;                                           margin = margin(b = 16), hjust = 0, </span></span>
-<span><span class="co">#&gt; family = base_family),</span></span>
-<span><span class="co">#&gt;       plot.caption         = element_text(color = caption_col, size = rel(0.9),</span></span>
-<span><span class="co">#&gt; hjust = 1, margin = margin(t = 12)),</span></span>
-<span><span class="co">#&gt;       # Axis elements: very strong clarity but not harsh; no tick marks for </span></span>
-<span><span class="co">#&gt; supreme minimalism</span></span>
-<span><span class="co">#&gt;       axis.title           = element_text(color = axis_col, face = "bold"),</span></span>
-<span><span class="co">#&gt;       axis.text            = element_text(color = axis_col),</span></span>
-<span><span class="co">#&gt;       axis.line.x          = element_line(color = axis_col, linewidth = 0.5),</span></span>
-<span><span class="co">#&gt;       axis.line.y          = element_line(color = axis_col, linewidth = 0.5),</span></span>
-<span><span class="co">#&gt;       axis.ticks           = element_blank(),</span></span>
-<span><span class="co">#&gt;       # Faceting: strip text in red for emphasis, but background blends in</span></span>
-<span><span class="co">#&gt;       strip.background     = element_rect(fill = strip_bg_col, color = NA),</span></span>
-<span><span class="co">#&gt;       strip.text           = element_text(color = strip_fg_col, size = </span></span>
-<span><span class="co">#&gt; rel(1.2), face = "bold"),</span></span>
-<span><span class="co">#&gt;       # Legend styling: white background, minimal box, black/gray text</span></span>
-<span><span class="co">#&gt;       legend.background    = element_rect(fill = legend_bg_col, color = NA),</span></span>
-<span><span class="co">#&gt;       legend.key           = element_rect(fill = legend_bg_col, color = NA),</span></span>
-<span><span class="co">#&gt;       legend.text          = element_text(color = legend_text_col),</span></span>
-<span><span class="co">#&gt;       legend.title         = element_text(color = legend_title_col, face = </span></span>
-<span><span class="co">#&gt; "bold"),</span></span>
-<span><span class="co">#&gt;       legend.position      = "bottom",</span></span>
-<span><span class="co">#&gt;       # Whitespace: ample margins for breathability, consistent with Swiss </span></span>
-<span><span class="co">#&gt; style</span></span>
-<span><span class="co">#&gt;       plot.margin          = margin(24, 24, 24, 24)</span></span>
-<span><span class="co">#&gt;     )</span></span>
+<span><span class="co">#&gt;     axis.title        = element_text(size = rel(1.05), colour = fg_black, </span></span>
+<span><span class="co">#&gt; family = base_family, face = "plain"),</span></span>
+<span><span class="co">#&gt;     axis.title.x      = element_text(margin = margin(t = half_line / 2), vjust </span></span>
+<span><span class="co">#&gt; = 1),</span></span>
+<span><span class="co">#&gt;     axis.title.y      = element_text(margin = margin(r = half_line / 2), angle </span></span>
+<span><span class="co">#&gt; = 90, vjust = 1),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Swiss/International Style headline hierarchy</span></span>
+<span><span class="co">#&gt;     plot.title    = element_text(</span></span>
+<span><span class="co">#&gt;       family = base_family, face = "bold", colour = fg_black,</span></span>
+<span><span class="co">#&gt;       size = rel(1.6), hjust = 0, vjust = 1, margin = margin(b = half_line * </span></span>
+<span><span class="co">#&gt; 0.5)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.subtitle = element_text(</span></span>
+<span><span class="co">#&gt;       family = base_family, face = "plain", colour = fg_black,</span></span>
+<span><span class="co">#&gt;       size = rel(1.2), hjust = 0, vjust = 1, margin = margin(b = half_line * </span></span>
+<span><span class="co">#&gt; 0.3)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.caption  = element_text(</span></span>
+<span><span class="co">#&gt;       family = base_family, face = "plain", colour = grid_major,</span></span>
+<span><span class="co">#&gt;       size = rel(0.85), hjust = 0, margin = margin(t = half_line * 0.6)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Facet: subtle red underline, all-caps, to echo Swiss touch</span></span>
+<span><span class="co">#&gt;     strip.background = element_blank(),</span></span>
+<span><span class="co">#&gt;     strip.text = element_text(</span></span>
+<span><span class="co">#&gt;       family = base_family, face = "bold", colour = fg_black, size = rel(1.02),</span></span>
+<span><span class="co">#&gt;       margin = margin(b = 2)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     strip.placement = "outside",</span></span>
+<span><span class="co">#&gt;     strip.text.y = element_text(angle = 0, vjust = 1),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Red accent for legend title and/or strip underline (Swiss design nod)</span></span>
+<span><span class="co">#&gt;     legend.background  = element_rect(fill = bg_white, colour = NA),</span></span>
+<span><span class="co">#&gt;     legend.key         = element_rect(fill = bg_white, colour = NA),</span></span>
+<span><span class="co">#&gt;     legend.title       = element_text(</span></span>
+<span><span class="co">#&gt;       colour = accent_red, face = "bold", size = rel(1), family = base_family</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     legend.text        = element_text(</span></span>
+<span><span class="co">#&gt;       colour = fg_black, size = rel(0.95), family = base_family</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     legend.position    = "bottom",</span></span>
+<span><span class="co">#&gt;     legend.direction   = "horizontal",</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Subtle margins for white space discipline</span></span>
+<span><span class="co">#&gt;     plot.margin = margin(half_line, half_line, half_line, half_line),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Complete definition</span></span>
+<span><span class="co">#&gt;     complete = TRUE</span></span>
+<span><span class="co">#&gt;   )</span></span>
 <span><span class="co">#&gt; }</span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu">theme_swiss</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-swiss-1.png" width="100%"></p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">theme_chartjunk</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/make_ai_theme.html">make_ai_theme</a></span><span class="op">(</span><span class="va">chat</span>, </span>
-<span>                                 <span class="st">'turn the chartjunk level up to 11. people should be genuinely horrified by this chart. there should be tons extra crap everywhere.'</span><span class="op">)</span></span>
-<span><span class="co">#&gt; function(base_size = 13, base_family = "") {</span></span>
-<span><span class="co">#&gt;   # Deliberately create a visually overwhelming, cluttered "chartjunk" theme.</span></span>
-<span><span class="co">#&gt;   # Contrasting colors, maximalist grid, excessive backgrounds, drop shadows, </span></span>
-<span><span class="co">#&gt; watermark, borders―everything!</span></span>
-<span><span class="co">#&gt;   bg_color           &lt;- "#FFFFC1"  # retina-burning yellowish background</span></span>
-<span><span class="co">#&gt;   panel_bg_color     &lt;- "#FFD6F5"  # jarring pastel pink panel</span></span>
-<span><span class="co">#&gt;   panel_border_col   &lt;- "#00FF00"  # green border for panels</span></span>
-<span><span class="co">#&gt;   grid_major_col     &lt;- "#0000FF"  # strong blue major grid</span></span>
-<span><span class="co">#&gt;   grid_minor_col     &lt;- "#FF0000"  # bright red minor grid</span></span>
-<span><span class="co">#&gt;   axis_title_col     &lt;- "#00FFFF"  # cyan axis titles</span></span>
-<span><span class="co">#&gt;   axis_text_col      &lt;- "#800080"  # purple axis text</span></span>
-<span><span class="co">#&gt;   axis_line_col      &lt;- "#FFA500"  # orange axis lines</span></span>
-<span><span class="co">#&gt;   title_col          &lt;- "#FF00FF"  # magenta plot title</span></span>
-<span><span class="co">#&gt;   subtitle_col       &lt;- "#008000"  # green subtitle</span></span>
-<span><span class="co">#&gt;   caption_col        &lt;- "#404040"  # muddy gray</span></span>
-<span><span class="co">#&gt;   strip_bg_col       &lt;- "#00FFFF"  # glowing cyan for strip bg</span></span>
-<span><span class="co">#&gt;   strip_fg_col       &lt;- "#FF6600"  # orange for strip text</span></span>
-<span><span class="co">#&gt;   legend_bg_col      &lt;- "#00FF00"  # neon green</span></span>
-<span><span class="co">#&gt;   legend_key_col     &lt;- "#FF0000"  # red legend keys</span></span>
-<span><span class="co">#&gt;   legend_text_col    &lt;- "#0000FF"  # blue legend text</span></span>
-<span><span class="co">#&gt;   legend_title_col   &lt;- "#FFFFFF"  # white legend title</span></span>
-<span><span class="co">#&gt;   shadow_col         &lt;- "#B22222"  # firebrick for drop shadow effects</span></span>
+<span>                                 <span class="st">'add some annoying chartjunk'</span><span class="op">)</span></span>
+<span><span class="co">#&gt; function(base_size = 12, base_family = "") {</span></span>
+<span><span class="co">#&gt;   # Chartjunk color palette and parameters</span></span>
+<span><span class="co">#&gt;   bg_color      &lt;- "#fcfaf2"  # slightly yellow paper background</span></span>
+<span><span class="co">#&gt;   grid_major    &lt;- "#e6e0cf"</span></span>
+<span><span class="co">#&gt;   grid_minor    &lt;- "#f2eddc"</span></span>
+<span><span class="co">#&gt;   axis_color    &lt;- "#9B4DCA"  # garish, clashing purple</span></span>
+<span><span class="co">#&gt;   tick_color    &lt;- "#ED2939"  # eye-popping red ticks</span></span>
+<span><span class="co">#&gt;   fg_text       &lt;- "#14396D"  # heavy blue for text</span></span>
+<span><span class="co">#&gt;   title_color   &lt;- "#ff9900"  # neon orange titles</span></span>
+<span><span class="co">#&gt;   subtitle_col  &lt;- "#108144"  # green for subtitle</span></span>
+<span><span class="co">#&gt;   legend_bg     &lt;- "#e5e4e2"  # off-gray legend bg</span></span>
+<span><span class="co">#&gt;   strip_bg1     &lt;- "#fff301"  # neon yellow panel</span></span>
+<span><span class="co">#&gt;   strip_bg2     &lt;- "#FF5F1F"  # bright orange strip</span></span>
+<span><span class="co">#&gt;   border_col    &lt;- "#f5115f"  # hot pink border</span></span>
+<span><span class="co">#&gt;   watermark_col &lt;- "#00b9eb55" # semi-transparent neon blue</span></span>
+<span><span class="co">#&gt;   spiral_col    &lt;- "#F400A1"  # magenta for embellishments</span></span>
+<span><span class="co">#&gt;   half_line     &lt;- base_size / 2</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   # "Watermark" text for pure chartjunk</span></span>
-<span><span class="co">#&gt;   watermark_text &lt;- "CHARTJUNK!"</span></span>
+<span><span class="co">#&gt;   theme(</span></span>
+<span><span class="co">#&gt;     # Garish, heavy lines against muted paper bg</span></span>
+<span><span class="co">#&gt;     line = element_line(colour = axis_color, linewidth = 1, lineend = "butt"),</span></span>
+<span><span class="co">#&gt;     rect = element_rect(fill = bg_color, colour = border_col, linewidth = 2),</span></span>
+<span><span class="co">#&gt;     text = element_text(</span></span>
+<span><span class="co">#&gt;       family = base_family, face = "italic",</span></span>
+<span><span class="co">#&gt;       colour = fg_text, size = base_size, lineheight = 0.88, hjust = 0.5, vjust</span></span>
+<span><span class="co">#&gt; = 0.5</span></span>
+<span><span class="co">#&gt;     ),</span></span>
 <span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;   theme_void(base_size = base_size, base_family = base_family) %+replace%</span></span>
-<span><span class="co">#&gt;     theme(</span></span>
-<span><span class="co">#&gt;       # Super-bright, jarring backgrounds</span></span>
-<span><span class="co">#&gt;       plot.background        = element_rect(fill = bg_color, color = "#FF00FF",</span></span>
-<span><span class="co">#&gt; linewidth = 10), # magenta plot border</span></span>
-<span><span class="co">#&gt;       panel.background       = element_rect(fill = panel_bg_color, color = NA),</span></span>
-<span><span class="co">#&gt;       # Oversized panel border for maximal clutter</span></span>
-<span><span class="co">#&gt;       panel.border           = element_rect(fill = NA, color = </span></span>
-<span><span class="co">#&gt; panel_border_col, linewidth = 6, linetype = "dashed"),</span></span>
-<span><span class="co">#&gt;       # Maximal grid lines: every line, heavy, clashing colors</span></span>
-<span><span class="co">#&gt;       panel.grid.major       = element_line(color = grid_major_col, linewidth =</span></span>
-<span><span class="co">#&gt; 1.4, linetype = "longdash"),</span></span>
-<span><span class="co">#&gt;       panel.grid.minor       = element_line(color = grid_minor_col, linewidth =</span></span>
-<span><span class="co">#&gt; 0.8, linetype = "dotdash"),</span></span>
-<span><span class="co">#&gt;       # Axis lines in screaming orange, thick and double</span></span>
-<span><span class="co">#&gt;       axis.line              = element_line(color = axis_line_col, linewidth = </span></span>
-<span><span class="co">#&gt; 2.5, linetype = "twodash"),</span></span>
-<span><span class="co">#&gt;       # Axes with both ticks and tick text heavily stylized</span></span>
-<span><span class="co">#&gt;       axis.ticks             = element_line(color = "#000000", linewidth = 2, </span></span>
-<span><span class="co">#&gt; linetype = "dotted"),</span></span>
-<span><span class="co">#&gt;       axis.ticks.length      = unit(9, "pt"),</span></span>
-<span><span class="co">#&gt;       axis.title             = element_text(color = axis_title_col, size = </span></span>
-<span><span class="co">#&gt; rel(2), face = "bold.italic",</span></span>
-<span><span class="co">#&gt;                                             family = "Comic Sans MS"),</span></span>
-<span><span class="co">#&gt;       axis.text              = element_text(color = axis_text_col, size = </span></span>
-<span><span class="co">#&gt; rel(1.5), face = "bold.italic",</span></span>
-<span><span class="co">#&gt;                                             family = "Impact"),</span></span>
-<span><span class="co">#&gt;       # Drop shadow for axis text (mimicked by using a shadow grob below axis </span></span>
-<span><span class="co">#&gt; text)</span></span>
-<span><span class="co">#&gt;       axis.text.x.top        = element_text(color = shadow_col, margin = </span></span>
-<span><span class="co">#&gt; margin(b = -15)),</span></span>
-<span><span class="co">#&gt;       axis.text.y.right      = element_text(color = shadow_col, margin = </span></span>
-<span><span class="co">#&gt; margin(l = -15)),</span></span>
-<span><span class="co">#&gt;       # Loud plot title, subtitle, caption, all big</span></span>
-<span><span class="co">#&gt;       plot.title             = element_text(color = title_col, face = </span></span>
-<span><span class="co">#&gt; "bold.italic", size = rel(3.2),</span></span>
-<span><span class="co">#&gt;                                             family = "Papyrus", hjust = 0.5, </span></span>
-<span><span class="co">#&gt; margin = margin(b = 10)),</span></span>
-<span><span class="co">#&gt;       plot.subtitle          = element_text(color = subtitle_col, face = </span></span>
-<span><span class="co">#&gt; "bold", size = rel(2),</span></span>
-<span><span class="co">#&gt;                                             family = "Comic Sans MS", hjust = </span></span>
-<span><span class="co">#&gt; 0.5, margin = margin(b = 18)),</span></span>
-<span><span class="co">#&gt;       plot.caption           = element_text(color = caption_col, size = </span></span>
-<span><span class="co">#&gt; rel(1.3), face = "bold",</span></span>
-<span><span class="co">#&gt;                                             family = "Impact", hjust = 0.5, </span></span>
-<span><span class="co">#&gt; margin = margin(t = 25)),</span></span>
-<span><span class="co">#&gt;       # Facet strips with more noise</span></span>
-<span><span class="co">#&gt;       strip.background       = element_rect(fill = strip_bg_col, color = </span></span>
-<span><span class="co">#&gt; "#FF00FF", linewidth = 4),</span></span>
-<span><span class="co">#&gt;       strip.text             = element_text(color = strip_fg_col, size = </span></span>
-<span><span class="co">#&gt; rel(1.9), face = "bold.italic",</span></span>
-<span><span class="co">#&gt;                                             family = "Papyrus"),</span></span>
-<span><span class="co">#&gt;       # Giant legend box with neon bg and red keys</span></span>
-<span><span class="co">#&gt;       legend.background      = element_rect(fill = legend_bg_col, color = </span></span>
-<span><span class="co">#&gt; "#FF00FF", linewidth = 6),</span></span>
-<span><span class="co">#&gt;       legend.key             = element_rect(fill = legend_key_col, color = </span></span>
-<span><span class="co">#&gt; "#FFFF00", linewidth = 3), # yellow border</span></span>
-<span><span class="co">#&gt;       legend.text            = element_text(color = legend_text_col, size = </span></span>
-<span><span class="co">#&gt; rel(1.5), face = "bold.italic",</span></span>
-<span><span class="co">#&gt;                                             family = "Comic Sans MS"),</span></span>
-<span><span class="co">#&gt;       legend.title           = element_text(color = legend_title_col, size = </span></span>
-<span><span class="co">#&gt; rel(1.6), face = "bold",</span></span>
-<span><span class="co">#&gt;                                             family = "Impact"),</span></span>
-<span><span class="co">#&gt;       legend.position        = "right",</span></span>
-<span><span class="co">#&gt;       # Overly excessive margins to crowd in from sides, but top and bottom </span></span>
-<span><span class="co">#&gt; little space</span></span>
-<span><span class="co">#&gt;       plot.margin            = margin(2, 80, 2, 65),</span></span>
-<span><span class="co">#&gt;       # Add base grid everywhere just in case</span></span>
-<span><span class="co">#&gt;       panel.grid             = element_line(),</span></span>
-<span><span class="co">#&gt;       # Insert a watermark-like annotation (user needs to add, but here's </span></span>
-<span><span class="co">#&gt; guidance as comment)</span></span>
-<span><span class="co">#&gt;       # ggplot(...) + annotate("text", x = Inf, y = -Inf, label = </span></span>
-<span><span class="co">#&gt; watermark_text, </span></span>
-<span><span class="co">#&gt;       #      hjust = 1.2, vjust = -0.5, angle = 30, cex = 14, color = </span></span>
-<span><span class="co">#&gt; "#FF00FF", alpha = 0.1,</span></span>
-<span><span class="co">#&gt;       #      family = "Comic Sans MS", fontface = "bold")</span></span>
-<span><span class="co">#&gt;       # For extra chartjunk, you can ask users to add geom_hline, geom_vline, </span></span>
-<span><span class="co">#&gt; geom_mark*, and clip art!</span></span>
-<span><span class="co">#&gt;       # Clutter up strip placement</span></span>
-<span><span class="co">#&gt;       strip.placement        = "outside"</span></span>
-<span><span class="co">#&gt;     )</span></span>
+<span><span class="co">#&gt;     # Over-the-top backgrounds everywhere</span></span>
+<span><span class="co">#&gt;     plot.background  = element_rect(fill = bg_color, colour = border_col, </span></span>
+<span><span class="co">#&gt; linewidth = 4),</span></span>
+<span><span class="co">#&gt;     panel.background = element_rect(fill = strip_bg1, colour = strip_bg2, </span></span>
+<span><span class="co">#&gt; linewidth = 3),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Grid lines: overbearing, clashing and offset to clash</span></span>
+<span><span class="co">#&gt;     panel.grid.major = element_line(colour = grid_major, linewidth = 1.2, </span></span>
+<span><span class="co">#&gt; linetype = "twodash"),</span></span>
+<span><span class="co">#&gt;     panel.grid.minor = element_line(colour = grid_minor, linewidth = 0.85, </span></span>
+<span><span class="co">#&gt; linetype = "longdash"),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Panel border: thick and bright</span></span>
+<span><span class="co">#&gt;     panel.border = element_rect(fill = NA, colour = border_col, linewidth = 3),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Axis lines/ticks: garish, thick, mismatched colors</span></span>
+<span><span class="co">#&gt;     axis.line  = element_line(colour = axis_color, linewidth = 2.2, linetype = </span></span>
+<span><span class="co">#&gt; "solid"),</span></span>
+<span><span class="co">#&gt;     axis.ticks = element_line(colour = tick_color, linewidth = 2.8, linetype = </span></span>
+<span><span class="co">#&gt; "dotdash"),</span></span>
+<span><span class="co">#&gt;     axis.ticks.length = unit(3, "mm"),</span></span>
+<span><span class="co">#&gt;     axis.text = element_text(size = rel(1.3), colour = fg_text, face = "bold"),</span></span>
+<span><span class="co">#&gt;     axis.title = element_text(size = rel(1.4), colour = tick_color, face = </span></span>
+<span><span class="co">#&gt; "bold.italic", angle = 5),</span></span>
+<span><span class="co">#&gt;     axis.title.x = element_text(margin = margin(t = half_line), vjust = 1.5),</span></span>
+<span><span class="co">#&gt;     axis.title.y = element_text(margin = margin(r = half_line), angle = 90, </span></span>
+<span><span class="co">#&gt; vjust = 1.5),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Loud, clunky titles</span></span>
+<span><span class="co">#&gt;     plot.title = element_text(</span></span>
+<span><span class="co">#&gt;       colour = title_color, face = "bold.italic", size = rel(2.4),</span></span>
+<span><span class="co">#&gt;       hjust = 0.5, margin = margin(b = half_line * 0.8), angle = 8</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.subtitle = element_text(</span></span>
+<span><span class="co">#&gt;       colour = subtitle_col, face = "bold", size = rel(1.2),</span></span>
+<span><span class="co">#&gt;       hjust = 0.5, margin = margin(b = half_line * 0.8), angle = -7</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.caption = element_text(</span></span>
+<span><span class="co">#&gt;       colour = axis_color, size = rel(1.1),</span></span>
+<span><span class="co">#&gt;       hjust = 1, margin = margin(t = half_line * 2)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     plot.margin = margin(half_line * 2, half_line * 2, half_line * 2, half_line</span></span>
+<span><span class="co">#&gt; * 2),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # In-your-face legend</span></span>
+<span><span class="co">#&gt;     legend.background  = element_rect(fill = legend_bg, colour = border_col, </span></span>
+<span><span class="co">#&gt; linewidth = 3),</span></span>
+<span><span class="co">#&gt;     legend.key         = element_rect(fill = strip_bg2, colour = axis_color, </span></span>
+<span><span class="co">#&gt; linewidth = 1.4),</span></span>
+<span><span class="co">#&gt;     legend.title       = element_text(</span></span>
+<span><span class="co">#&gt;       colour = border_col, face = "bold.italic", size = rel(1.2)</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     legend.text        = element_text(</span></span>
+<span><span class="co">#&gt;       colour = "#ff00ff", size = rel(1.08), face = "italic"</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     legend.position    = "top",</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # Multi-colored and bold facet strips</span></span>
+<span><span class="co">#&gt;     strip.background = element_rect(</span></span>
+<span><span class="co">#&gt;       fill = strip_bg2, colour = spiral_col, linewidth = 4, linetype = </span></span>
+<span><span class="co">#&gt; "dotdash"</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt;     strip.text = element_text(</span></span>
+<span><span class="co">#&gt;       colour = "#2E04A1", face = "bold.italic", size = rel(1.35), angle = 7</span></span>
+<span><span class="co">#&gt;     ),</span></span>
+<span><span class="co">#&gt; </span></span>
+<span><span class="co">#&gt;     # "Chartjunk" embellishment: add a fake watermark (users will need to </span></span>
+<span><span class="co">#&gt; ggplot2::annotation_custom for true effect)</span></span>
+<span><span class="co">#&gt;     plot.background.position = "left", # (not a real ggplot2 theme element; for</span></span>
+<span><span class="co">#&gt; clarity only)</span></span>
+<span><span class="co">#&gt;     # Complete the definition</span></span>
+<span><span class="co">#&gt;     complete = TRUE</span></span>
+<span><span class="co">#&gt;   )</span></span>
 <span><span class="co">#&gt; }</span></span>
 <span><span class="va">p</span> <span class="op">+</span> <span class="fu">theme_chartjunk</span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="reference/figures/README-chartjunk-1.png" width="100%"></p>
