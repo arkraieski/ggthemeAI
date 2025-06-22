@@ -121,7 +121,7 @@ Lastly, for use in Shiny apps, you need to be careful about security. Using a ha
 
 ## Bonus examples
 
-```{r cyberpunk}
+```{r cyberpunk, message=FALSE, warning=FALSE}
 theme_cyberpunk <- make_ai_theme(chat,
                                  'cyberpunk neon with Japanese influence')
 
@@ -133,14 +133,14 @@ p + theme_cyberpunk()
 
 ```
 
-```{r swiss}
+```{r swiss, message=FALSE, warning=FALSE}
 theme_swiss <- make_ai_theme(chat,
                                  'minimalist Swiss design')
 p + theme_swiss()
 ```
 
-```{r chartjunk}
+```{r chartjunk, message=FALSE, warning=FALSE}
 theme_chartjunk <- make_ai_theme(chat, 
-                                 'turn the chartjunk level up to 11. people should be genuinely horrified by this chart. there should be tons extra crap everywhere.')
+                                 'add some annoying chartjunk')
 p + theme_chartjunk()
 ```

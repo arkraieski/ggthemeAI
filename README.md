@@ -64,65 +64,75 @@ theme_expression <- make_ai_theme(chat,
                                  'solarized dark take on the default ggplot2 theme',
                                  return_type = "expression")
 #> function(base_size = 11, base_family = "") {
-#>   # Define Solarized Dark color palette
+#>   # Solarized Dark core palette
 #>   bg        <- "#002b36" # base03
-#>   panel_bg  <- "#002b36" # base03
-#>   panel_fg  <- "#586e75" # base01
-#>   grid_maj  <- "#073642" # base02
-#>   grid_min  <- "#073642" # base02 (use transparency for min grid)
-#>   axis_col  <- "#93a1a1" # base1
-#>   text_col  <- "#eee8d5" # base2
-#>   title_col <- "#b58900" # yellow
-#>   subtitle_col <- "#2aa198" # cyan
-#>   legend_bg <- "#073642" # base02
+#>   fg        <- "#839496" # base0
+#>   grid      <- "#073642" # base02
+#>   axis      <- "#586e75" # base01
+#>   title_col <- "#93a1a1" # base1
+#>   tick_col  <- "#839496" # base0
+#>   panel_bg  <- "#003541" # slightly lighter than bg for panel
 #>   strip_bg  <- "#073642" # base02
-#>   strip_fg  <- "#b58900" # yellow
-#>   facet_fg  <- "#b58900" # yellow
-#>   
-#>   # Use the classic theme as a starting point for easier reading vs. theme_grey
-#>   theme_classic(base_size = base_size, base_family = base_family) %+replace%
-#>     theme(
-#>       # Main plot background and panel background
-#>       plot.background = element_rect(fill = bg, color = NA),
-#>       panel.background = element_rect(fill = panel_bg, color = NA),
-#>       # Use contrasting color for text for accessibility
-#>       text = element_text(color = text_col, size = base_size, family = 
+#>   accent    <- "#b58900" # yellow for emphasis
+#> 
+#>   half_line <- base_size / 2
+#> 
+#>   theme(
+#>     # Base settings
+#>     line = element_line(colour = fg, linewidth = 0.5, lineend = "round"),
+#>     rect = element_rect(fill = bg, colour = NA),
+#>     text = element_text(family = base_family, face = "plain",
+#>                         colour = fg, size = base_size, lineheight = 0.9, hjust 
+#> = 0.5, vjust = 0.5),
+#>     # Plot background
+#>     plot.background = element_rect(fill = bg, colour = NA),
+#>     panel.background = element_rect(fill = panel_bg, colour = NA),
+#>     # Panel grid
+#>     panel.grid.major = element_line(colour = grid, linewidth = 0.65),
+#>     panel.grid.minor = element_line(colour = grid, linewidth = 0.3),
+#>     # Panel border
+#>     panel.border = element_blank(), # Leave border off for minimalist look
+#>     # Axes
+#>     axis.ticks = element_line(colour = tick_col, linewidth = 0.4),
+#>     axis.ticks.length = unit(half_line / 2, "pt"),
+#>     axis.line = element_line(linewidth = 0.7, colour = axis),
+#>     axis.text = element_text(size = rel(0.85), colour = fg, family = 
 #> base_family),
-#>       # Titles with solarized accent
-#>       plot.title = element_text(color = title_col, size = rel(1.25), face = 
-#> "bold", hjust = 0.0),
-#>       plot.subtitle = element_text(color = subtitle_col, size = rel(1.05), 
-#> hjust = 0.0),
-#>       plot.caption = element_text(color = panel_fg, size = rel(0.85), hjust = 
-#> 1, margin = margin(t = 8)),
-#>       # Axis lines & ticks for contrast
-#>       axis.title = element_text(color = axis_col, size = rel(1.1)),
-#>       axis.text = element_text(color = axis_col),
-#>       axis.line = element_line(color = axis_col, linewidth = 0.5),
-#>       axis.ticks = element_line(color = axis_col, linewidth = 0.4),
-#>       # Major & minor grid lines subtly present
-#>       panel.grid.major = element_line(color = grid_maj, linewidth = 0.5),
-#>       panel.grid.minor = element_line(color = grid_min, linewidth = 0.25, 
-#> linetype = "dotted"),
-#>       # Remove minor grid if not desired
-#>       # panel.grid.minor = element_blank(),
-#>       # Legend styling
-#>       legend.background = element_rect(fill = legend_bg, color = NA),
-#>       legend.key = element_rect(fill = legend_bg, color = NA),
-#>       legend.text = element_text(color = panel_fg),
-#>       legend.title = element_text(color = title_col, face = "bold"),
-#>       # Facet strip (for facet_wrap/ facet_grid)
-#>       strip.background = element_rect(fill = strip_bg, color = NA),
-#>       strip.text = element_text(color = strip_fg, face = "bold"),
-#>       # Remove axis ticks length for a modern look
-#>       axis.ticks.length = unit(5, "pt"),
-#>       # Remove panel border for a flat, modern look
-#>       panel.border = element_blank(),
-#>       # Margins
-#>       plot.margin = margin(11, 11, 11, 11),
-#>       # Avoid grey grid in legend
-#>       legend.box.background = element_blank()
-#>     )
+#>     axis.title = element_text(size = rel(1.1), colour = fg, family = 
+#> base_family),
+#>     axis.title.x = element_text(margin = margin(t = half_line / 2), vjust = 1),
+#>     axis.title.y = element_text(margin = margin(r = half_line / 2), angle = 90,
+#> vjust = 1),
+#>     # Strip (facet) settings
+#>     strip.background = element_rect(fill = strip_bg, colour = NA),
+#>     strip.text = element_text(size = rel(1.0), colour = accent, face = "bold"),
+#>     # Legend
+#>     legend.background = element_rect(fill = bg, colour = NA),
+#>     legend.key = element_rect(fill = panel_bg, colour = NA),
+#>     legend.text = element_text(colour = fg, size = rel(0.9)),
+#>     legend.title = element_text(colour = accent, size = rel(1.05), face = 
+#> "bold"),
+#>     legend.position = "right",
+#>     # Titles
+#>     plot.title = element_text(
+#>       colour = title_col, face = "bold", size = rel(1.3),
+#>       hjust = 0, vjust = 1, margin = margin(b = half_line)
+#>     ),
+#>     plot.subtitle = element_text(
+#>       colour = title_col, size = rel(1.05),
+#>       hjust = 0, vjust = 1, margin = margin(b = half_line / 2)
+#>     ),
+#>     plot.caption = element_text(
+#>       colour = axis, size = rel(0.85),
+#>       hjust = 1, vjust = 1, margin = margin(t = half_line / 2)
+#>     ),
+#>     plot.margin = margin(half_line, half_line, half_line, half_line),
+#>     # Remove minor tick lines for clarity on dark backgrounds
+#>     axis.ticks.y.right = element_blank(),
+#>     axis.ticks.x.top = element_blank(),
+#>     # Make sure there is sufficient contrast and clarity
+#>     complete = TRUE
+#>   )
 #> }
 
 # in an interactive session, you can/should now inspect the content of theme code
@@ -224,86 +234,86 @@ if other precautions are taken to keep things low risk.
 theme_cyberpunk <- make_ai_theme(chat,
                                  'cyberpunk neon with Japanese influence')
 #> function(base_size = 12, base_family = "") {
-#>   # Cyberpunk-inspired neon color palette with Japanese influence
-#>   bg_color         <- "#181726"   # deep twilight purple as plot background
-#>   panel_bg_color   <- "#232032"   # slightly lighter for panel background
-#>   grid_major_col   <- "#3c3a69"   # dim blue-violet for primary grid
-#>   grid_minor_col   <- "#222156"   # almost indigo for minor grid
-#>   axis_line_col    <- "#f5f5f7"   # nearly white for sharp contrast
-#>   axis_text_col    <- "#F9F6EE"   # very light ivory
-#>   axis_title_col   <- "#F6019D"   # neon magenta/pink for major accent
-#>   title_col        <- "#00ffe7"   # neon aqua/cyan for titles
-#>   subtitle_col     <- "#ffdc57"   # neon yellow for subtitle
-#>   caption_col      <- "#a599e9"   # soft neon lavender for captions
-#>   legend_bg_col    <- "#181726"   # match plot bg
-#>   legend_key_col   <- "#232032"   # panel bg
-#>   legend_title_col <- "#F6019D"
-#>   legend_text_col  <- "#ffdc57"
-#>   strip_bg_col     <- "#3c3a69"   # blue-violet as facet strip background
-#>   strip_fg_col     <- "#fff"      # pure white for strip text
+#>   # Core neon cyberpunk palette + Japanese influence
+#>   bg_dark        <- "#16151a" # Near-black deep violet
+#>   fg_light       <- "#ececec" # Off-white for highly readable text
+#>   neon_pink      <- "#ff46c8" # Neon magenta
+#>   neon_cyan      <- "#00fff5"
+#>   neon_yellow    <- "#fff700"
+#>   accent_red     <- "#ff5959" # Neon red, Japan rising sun accent
+#>   grid_col       <- "#2c2a34" # Subtle grid lines
+#>   axis_col       <- neon_cyan  # Neon cyan for key lines
+#>   title_col      <- neon_pink  # For titles/headings
+#>   subtitle_col   <- neon_cyan
+#>   strip_bg       <- "#22202d"  # Slightly lighter than bg
+#>   legend_bg      <- "#1b1923"
+#>   panel_border   <- neon_yellow
+#>   half_line      <- base_size / 2
 #> 
-#>   # Optional: subtle Japanese touch, e.g. dotted grid lines evoke Tokyo neon 
-#> streets
-#>   base_family_jp <- if (base_family == "") "Noto Sans JP" else base_family
-#> 
-#>   theme_minimal(base_size = base_size, base_family = base_family_jp) %+replace%
-#> 
-#>     theme(
-#>       # Backgrounds
-#>       plot.background      = element_rect(fill = bg_color, color = NA),
-#>       panel.background     = element_rect(fill = panel_bg_color, color = NA),
-#>       # Text colors & fonts
-#>       text                 = element_text(color = axis_text_col, family = 
-#> base_family_jp),
-#>       plot.title           = element_text(color = title_col, face = "bold", 
-#> size = rel(1.7), 
-#>                                           margin = margin(b = 12), 
-#>                                           family = base_family_jp, hjust = 0),
-#>       plot.subtitle        = element_text(color = subtitle_col, face = "plain",
-#> size = rel(1.15), 
-#>                                           margin = margin(b = 16), 
-#>                                           family = base_family_jp),
-#>       plot.caption         = element_text(color = caption_col, size = rel(0.9),
-#> hjust = 1, 
-#>                                           margin = margin(t = 10)),
-#>       axis.title           = element_text(color = axis_title_col, face = 
-#> "bold", size = rel(1.2)),
-#>       axis.text            = element_text(color = axis_text_col, size = 
+#>   theme(
+#>     # Base
+#>     line = element_line(colour = fg_light, linewidth = 0.6, lineend = "round"),
+#>     rect = element_rect(fill = bg_dark, colour = NA),
+#>     text = element_text(family = base_family, colour = fg_light, size = 
+#> base_size),
+#>     # Plot background
+#>     plot.background = element_rect(fill = bg_dark, colour = NA),
+#>     panel.background = element_rect(fill = bg_dark, colour = NA),
+#>     # Neon accent panel border
+#>     panel.border = element_rect(colour = panel_border, fill = NA, linewidth = 
+#> 1.3),
+#>     # Grid lines (faint, not to overpower neon lines)
+#>     panel.grid.major = element_line(colour = grid_col, linewidth = 0.45),
+#>     panel.grid.minor = element_line(colour = grid_col, linewidth = 0.19),
+#>     # Axes: Neon cyan lines and ticks
+#>     axis.line = element_line(colour = axis_col, linewidth = 1.1),
+#>     axis.ticks = element_line(colour = neon_yellow, linewidth = 0.7),
+#>     axis.ticks.length = unit(half_line / 2, "pt"),
+#>     axis.text = element_text(colour = fg_light, family = base_family, size = 
 #> rel(1)),
-#>       # Axis lines and ticks
-#>       axis.line            = element_line(color = axis_line_col, linewidth = 
-#> 0.8),
-#>       axis.ticks           = element_line(color = axis_title_col, linewidth = 
-#> 0.5),
-#>       axis.ticks.length    = unit(7, "pt"),
-#>       # Neon accent grid lines, dotted for cyberpunk effect
-#>       panel.grid.major     = element_line(color = grid_major_col, linewidth = 
-#> 0.7, linetype = "dotted"),
-#>       panel.grid.minor     = element_line(color = grid_minor_col, linewidth = 
-#> 0.35, linetype = "dotted"),
-#>       # Remove panel border for a cleaner luminous look
-#>       panel.border         = element_blank(),
-#>       # Legend neon styling
-#>       legend.background    = element_rect(fill = legend_bg_col, color = NA),
-#>       legend.key           = element_rect(fill = legend_key_col, color = NA),
-#>       legend.title         = element_text(color = legend_title_col, size = 
-#> rel(1.1), face = "bold"),
-#>       legend.text          = element_text(color = legend_text_col, size = 
-#> rel(0.95)),
-#>       # Faceting - glowing strip
-#>       strip.background     = element_rect(fill = strip_bg_col, color = NA),
-#>       strip.text           = element_text(color = strip_fg_col, family = 
-#> base_family_jp, 
-#>                                           face = "bold", size = rel(1.15)),
-#>       # Margins for floating-in-dark appearance
-#>       plot.margin          = margin(18, 16, 18, 16),
-#>       # Remove minor grid on y for slightly less clutter
-#>       panel.grid.minor.y   = element_blank(),
-#>       # Keep legend box background transparent
-#>       legend.box.background = element_blank()
-#>       # You may optionally add stylized Japanese text (e.g., grid labels or 
-#> watermark), but that's data, not theme.
-#>     )
+#>     axis.title = element_text(colour = neon_cyan, family = base_family, size = 
+#> rel(1.18), face = "bold"),
+#>     axis.title.x = element_text(margin = margin(t = half_line / 2), vjust = 1),
+#>     axis.title.y = element_text(margin = margin(r = half_line / 2), angle = 90,
+#> vjust = 1),
+#>     # Titles: Neon pink and cyan, inspired by Japanese vaporwave
+#>     plot.title = element_text(
+#>       colour = title_col, face = "bold", family = base_family, size = rel(1.7),
+#>       hjust = 0, margin = margin(b = half_line * 0.7)
+#>     ),
+#>     plot.subtitle = element_text(
+#>       colour = subtitle_col, family = base_family, size = rel(1.07),
+#>       hjust = 0, margin = margin(b = half_line * 0.5)
+#>     ),
+#>     plot.caption = element_text(
+#>       colour = fg_light, family = base_family, size = rel(0.78),
+#>       hjust = 1, margin = margin(t = half_line * 0.7)
+#>     ),
+#>     plot.margin = margin(half_line, half_line, half_line, half_line),
+#>     # Legend - subtle background, neon title
+#>     legend.background = element_rect(fill = legend_bg, colour = NA),
+#>     legend.key = element_rect(fill = bg_dark, colour = NA),
+#>     legend.text = element_text(colour = fg_light, size = rel(0.94)),
+#>     legend.title = element_text(colour = neon_pink, face = "bold", size = 
+#> rel(1.07)),
+#>     legend.position = "right",
+#>     # Faceting strips - subtle, neon border, Japanese pop touch with red txt
+#>     strip.background = element_rect(fill = strip_bg, colour = neon_cyan, 
+#> linewidth = 1.2),
+#>     strip.text = element_text(
+#>       colour = accent_red, face = "bold", family = base_family, size = 
+#> rel(1.12)
+#>     ),
+#>     # No shadows or blurs (hard to achieve in ggplot2), but use neon pops on 
+#> key lines/text
+#>     # Remove minor axis ticks for clarity
+#>     axis.ticks.y.right = element_blank(),
+#>     axis.ticks.x.top = element_blank(),
+#>     # Remove classic box for a floating neon panel feel
+#>     panel.ontop = FALSE,
+#>     # Complete theme specification
+#>     complete = TRUE
+#>   )
 #> }
 
 p <- ggplot(mtcars, aes(x = hp)) + 
@@ -311,182 +321,6 @@ p <- ggplot(mtcars, aes(x = hp)) +
   labs(title = "Horsepower Distribution")
 
 p + theme_cyberpunk()
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_stringMetric, as.graphicsAnnot(x$label)): no font could
-#> be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call(C_textBounds, as.graphicsAnnot(x$label), x$x, x$y, :
-#> Unable to calculate text width/height (using zero)
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
-#> Warning in grid.Call.graphics(C_text, as.graphicsAnnot(x$label), x$x, x$y, : no
-#> font could be found for family "Noto Sans JP"
 ```
 
 <img src="man/figures/README-cyberpunk-1.png" width="100%" />
@@ -495,72 +329,92 @@ p + theme_cyberpunk()
 theme_swiss <- make_ai_theme(chat,
                                  'minimalist Swiss design')
 #> function(base_size = 12, base_family = "") {
-#>   # Minimalist Swiss design relies on clarity, strong contrast, generous 
-#> whitespace, and asymmetric composition.
-#>   # Use mostly black, white, and a bold accent (classic Swiss red).
-#>   bg_color         <- "#FFFFFF"   # pure white background
-#>   panel_bg_color   <- "#FFFFFF"   # panels seamlessly match the plot background
-#>   grid_major_col   <- "#E0E0E0"   # light gray major grid for reference but not
-#> distraction
-#>   grid_minor_col   <- "#F5F5F5"   # even lighter minor grid
-#>   axis_col         <- "#222222"   # dark gray (not pure black) for axis text 
-#> and lines for a softer look
-#>   title_col        <- "#D40000"   # classic Swiss red for high impact (used for
-#> main title)
-#>   subtitle_col     <- "#555555"   # muted dark gray for subtitle
-#>   caption_col      <- "#AAAAAA"   # very soft gray for caption
-#>   strip_bg_col     <- "#FFFFFF"   # faceting strips should blend in
-#>   strip_fg_col     <- "#D40000"   # Swiss red for strip text
-#>   legend_bg_col    <- "#FFFFFF"   # legend box matches the background
-#>   legend_text_col  <- "#222222"
-#>   legend_title_col <- "#222222"
+#>   # Minimalist Swiss Design palette and element choices
+#>   bg_white      <- "#FFFFFF"   # clean white bg
+#>   fg_black      <- "#222222"   # very dark gray for high contrast text
+#>   grid_major    <- "#E0E0E0"   # light gray grid lines
+#>   grid_minor    <- "#F5F5F5"   # very faint for minor grid
+#>   accent_red    <- "#E30613"   # Swiss red for subtle emphasis
+#>   half_line     <- base_size / 2
 #> 
-#>   theme_minimal(base_size = base_size, base_family = base_family) %+replace%
-#>     theme(
-#>       # Backgrounds are intentionally flat white to emphasize clarity and grid
-#>       plot.background      = element_rect(fill = bg_color, color = NA),
-#>       panel.background     = element_rect(fill = panel_bg_color, color = NA),
-#>       # Grid lines: clear, light, do not dominate the scene
-#>       panel.grid.major     = element_line(color = grid_major_col, linewidth = 
-#> 0.5),
-#>       panel.grid.minor     = element_line(color = grid_minor_col, linewidth = 
-#> 0.25),
-#>       # Remove all panel borders for cleanliness
-#>       panel.border         = element_blank(),
-#>       # Titles and subtitles: strong and clear, with bold Swiss red accent for 
-#> the title
-#>       plot.title           = element_text(color = title_col, face = "bold", 
-#> size = rel(1.8),
-#>                                           margin = margin(b = 10), hjust = 0, 
+#>   theme(
+#>     # Basic element setup, lean sans family recommended for Swiss style
+#>     line = element_line(colour = fg_black, linewidth = 0.5, lineend = 
+#> "square"),
+#>     rect = element_rect(fill = bg_white, colour = NA),
+#>     text = element_text(
+#>       family = base_family, face = "plain",
+#>       colour = fg_black, size = base_size, lineheight = 1, hjust = 0
+#>     ),
+#> 
+#>     # Minimalist plot and panel backgrounds
+#>     plot.background  = element_rect(fill = bg_white, colour = NA),
+#>     panel.background = element_rect(fill = bg_white, colour = NA),
+#> 
+#>     # Use only horizontal grid lines for visual rhythm, drop minor details
+#>     panel.grid.major.x = element_blank(),
+#>     panel.grid.major.y = element_line(colour = grid_major, linewidth = 0.5),
+#>     panel.grid.minor.x = element_blank(),
+#>     panel.grid.minor.y = element_line(colour = grid_minor, linewidth = 0.3),
+#> 
+#>     # No panel borders or axes lines for ultra-clean page
+#>     panel.border = element_blank(),
+#>     axis.line    = element_blank(),
+#> 
+#>     # Axis ticks: simple, minimal
+#>     axis.ticks        = element_blank(),
+#>     axis.text         = element_text(size = rel(0.92), colour = fg_black, 
 #> family = base_family),
-#>       plot.subtitle        = element_text(color = subtitle_col, size = 
-#> rel(1.2),
-#>                                           margin = margin(b = 16), hjust = 0, 
-#> family = base_family),
-#>       plot.caption         = element_text(color = caption_col, size = rel(0.9),
-#> hjust = 1, margin = margin(t = 12)),
-#>       # Axis elements: very strong clarity but not harsh; no tick marks for 
-#> supreme minimalism
-#>       axis.title           = element_text(color = axis_col, face = "bold"),
-#>       axis.text            = element_text(color = axis_col),
-#>       axis.line.x          = element_line(color = axis_col, linewidth = 0.5),
-#>       axis.line.y          = element_line(color = axis_col, linewidth = 0.5),
-#>       axis.ticks           = element_blank(),
-#>       # Faceting: strip text in red for emphasis, but background blends in
-#>       strip.background     = element_rect(fill = strip_bg_col, color = NA),
-#>       strip.text           = element_text(color = strip_fg_col, size = 
-#> rel(1.2), face = "bold"),
-#>       # Legend styling: white background, minimal box, black/gray text
-#>       legend.background    = element_rect(fill = legend_bg_col, color = NA),
-#>       legend.key           = element_rect(fill = legend_bg_col, color = NA),
-#>       legend.text          = element_text(color = legend_text_col),
-#>       legend.title         = element_text(color = legend_title_col, face = 
-#> "bold"),
-#>       legend.position      = "bottom",
-#>       # Whitespace: ample margins for breathability, consistent with Swiss 
-#> style
-#>       plot.margin          = margin(24, 24, 24, 24)
-#>     )
+#>     axis.title        = element_text(size = rel(1.05), colour = fg_black, 
+#> family = base_family, face = "plain"),
+#>     axis.title.x      = element_text(margin = margin(t = half_line / 2), vjust 
+#> = 1),
+#>     axis.title.y      = element_text(margin = margin(r = half_line / 2), angle 
+#> = 90, vjust = 1),
+#> 
+#>     # Swiss/International Style headline hierarchy
+#>     plot.title    = element_text(
+#>       family = base_family, face = "bold", colour = fg_black,
+#>       size = rel(1.6), hjust = 0, vjust = 1, margin = margin(b = half_line * 
+#> 0.5)
+#>     ),
+#>     plot.subtitle = element_text(
+#>       family = base_family, face = "plain", colour = fg_black,
+#>       size = rel(1.2), hjust = 0, vjust = 1, margin = margin(b = half_line * 
+#> 0.3)
+#>     ),
+#>     plot.caption  = element_text(
+#>       family = base_family, face = "plain", colour = grid_major,
+#>       size = rel(0.85), hjust = 0, margin = margin(t = half_line * 0.6)
+#>     ),
+#> 
+#>     # Facet: subtle red underline, all-caps, to echo Swiss touch
+#>     strip.background = element_blank(),
+#>     strip.text = element_text(
+#>       family = base_family, face = "bold", colour = fg_black, size = rel(1.02),
+#>       margin = margin(b = 2)
+#>     ),
+#>     strip.placement = "outside",
+#>     strip.text.y = element_text(angle = 0, vjust = 1),
+#> 
+#>     # Red accent for legend title and/or strip underline (Swiss design nod)
+#>     legend.background  = element_rect(fill = bg_white, colour = NA),
+#>     legend.key         = element_rect(fill = bg_white, colour = NA),
+#>     legend.title       = element_text(
+#>       colour = accent_red, face = "bold", size = rel(1), family = base_family
+#>     ),
+#>     legend.text        = element_text(
+#>       colour = fg_black, size = rel(0.95), family = base_family
+#>     ),
+#>     legend.position    = "bottom",
+#>     legend.direction   = "horizontal",
+#> 
+#>     # Subtle margins for white space discipline
+#>     plot.margin = margin(half_line, half_line, half_line, half_line),
+#> 
+#>     # Complete definition
+#>     complete = TRUE
+#>   )
 #> }
 p + theme_swiss()
 ```
@@ -569,114 +423,108 @@ p + theme_swiss()
 
 ``` r
 theme_chartjunk <- make_ai_theme(chat, 
-                                 'turn the chartjunk level up to 11. people should be genuinely horrified by this chart. there should be tons extra crap everywhere.')
-#> function(base_size = 13, base_family = "") {
-#>   # Deliberately create a visually overwhelming, cluttered "chartjunk" theme.
-#>   # Contrasting colors, maximalist grid, excessive backgrounds, drop shadows, 
-#> watermark, borders―everything!
-#>   bg_color           <- "#FFFFC1"  # retina-burning yellowish background
-#>   panel_bg_color     <- "#FFD6F5"  # jarring pastel pink panel
-#>   panel_border_col   <- "#00FF00"  # green border for panels
-#>   grid_major_col     <- "#0000FF"  # strong blue major grid
-#>   grid_minor_col     <- "#FF0000"  # bright red minor grid
-#>   axis_title_col     <- "#00FFFF"  # cyan axis titles
-#>   axis_text_col      <- "#800080"  # purple axis text
-#>   axis_line_col      <- "#FFA500"  # orange axis lines
-#>   title_col          <- "#FF00FF"  # magenta plot title
-#>   subtitle_col       <- "#008000"  # green subtitle
-#>   caption_col        <- "#404040"  # muddy gray
-#>   strip_bg_col       <- "#00FFFF"  # glowing cyan for strip bg
-#>   strip_fg_col       <- "#FF6600"  # orange for strip text
-#>   legend_bg_col      <- "#00FF00"  # neon green
-#>   legend_key_col     <- "#FF0000"  # red legend keys
-#>   legend_text_col    <- "#0000FF"  # blue legend text
-#>   legend_title_col   <- "#FFFFFF"  # white legend title
-#>   shadow_col         <- "#B22222"  # firebrick for drop shadow effects
+                                 'add some annoying chartjunk')
+#> function(base_size = 12, base_family = "") {
+#>   # Chartjunk color palette and parameters
+#>   bg_color      <- "#fcfaf2"  # slightly yellow paper background
+#>   grid_major    <- "#e6e0cf"
+#>   grid_minor    <- "#f2eddc"
+#>   axis_color    <- "#9B4DCA"  # garish, clashing purple
+#>   tick_color    <- "#ED2939"  # eye-popping red ticks
+#>   fg_text       <- "#14396D"  # heavy blue for text
+#>   title_color   <- "#ff9900"  # neon orange titles
+#>   subtitle_col  <- "#108144"  # green for subtitle
+#>   legend_bg     <- "#e5e4e2"  # off-gray legend bg
+#>   strip_bg1     <- "#fff301"  # neon yellow panel
+#>   strip_bg2     <- "#FF5F1F"  # bright orange strip
+#>   border_col    <- "#f5115f"  # hot pink border
+#>   watermark_col <- "#00b9eb55" # semi-transparent neon blue
+#>   spiral_col    <- "#F400A1"  # magenta for embellishments
+#>   half_line     <- base_size / 2
 #> 
-#>   # "Watermark" text for pure chartjunk
-#>   watermark_text <- "CHARTJUNK!"
+#>   theme(
+#>     # Garish, heavy lines against muted paper bg
+#>     line = element_line(colour = axis_color, linewidth = 1, lineend = "butt"),
+#>     rect = element_rect(fill = bg_color, colour = border_col, linewidth = 2),
+#>     text = element_text(
+#>       family = base_family, face = "italic",
+#>       colour = fg_text, size = base_size, lineheight = 0.88, hjust = 0.5, vjust
+#> = 0.5
+#>     ),
 #> 
-#>   theme_void(base_size = base_size, base_family = base_family) %+replace%
-#>     theme(
-#>       # Super-bright, jarring backgrounds
-#>       plot.background        = element_rect(fill = bg_color, color = "#FF00FF",
-#> linewidth = 10), # magenta plot border
-#>       panel.background       = element_rect(fill = panel_bg_color, color = NA),
-#>       # Oversized panel border for maximal clutter
-#>       panel.border           = element_rect(fill = NA, color = 
-#> panel_border_col, linewidth = 6, linetype = "dashed"),
-#>       # Maximal grid lines: every line, heavy, clashing colors
-#>       panel.grid.major       = element_line(color = grid_major_col, linewidth =
-#> 1.4, linetype = "longdash"),
-#>       panel.grid.minor       = element_line(color = grid_minor_col, linewidth =
-#> 0.8, linetype = "dotdash"),
-#>       # Axis lines in screaming orange, thick and double
-#>       axis.line              = element_line(color = axis_line_col, linewidth = 
-#> 2.5, linetype = "twodash"),
-#>       # Axes with both ticks and tick text heavily stylized
-#>       axis.ticks             = element_line(color = "#000000", linewidth = 2, 
-#> linetype = "dotted"),
-#>       axis.ticks.length      = unit(9, "pt"),
-#>       axis.title             = element_text(color = axis_title_col, size = 
-#> rel(2), face = "bold.italic",
-#>                                             family = "Comic Sans MS"),
-#>       axis.text              = element_text(color = axis_text_col, size = 
-#> rel(1.5), face = "bold.italic",
-#>                                             family = "Impact"),
-#>       # Drop shadow for axis text (mimicked by using a shadow grob below axis 
-#> text)
-#>       axis.text.x.top        = element_text(color = shadow_col, margin = 
-#> margin(b = -15)),
-#>       axis.text.y.right      = element_text(color = shadow_col, margin = 
-#> margin(l = -15)),
-#>       # Loud plot title, subtitle, caption, all big
-#>       plot.title             = element_text(color = title_col, face = 
-#> "bold.italic", size = rel(3.2),
-#>                                             family = "Papyrus", hjust = 0.5, 
-#> margin = margin(b = 10)),
-#>       plot.subtitle          = element_text(color = subtitle_col, face = 
-#> "bold", size = rel(2),
-#>                                             family = "Comic Sans MS", hjust = 
-#> 0.5, margin = margin(b = 18)),
-#>       plot.caption           = element_text(color = caption_col, size = 
-#> rel(1.3), face = "bold",
-#>                                             family = "Impact", hjust = 0.5, 
-#> margin = margin(t = 25)),
-#>       # Facet strips with more noise
-#>       strip.background       = element_rect(fill = strip_bg_col, color = 
-#> "#FF00FF", linewidth = 4),
-#>       strip.text             = element_text(color = strip_fg_col, size = 
-#> rel(1.9), face = "bold.italic",
-#>                                             family = "Papyrus"),
-#>       # Giant legend box with neon bg and red keys
-#>       legend.background      = element_rect(fill = legend_bg_col, color = 
-#> "#FF00FF", linewidth = 6),
-#>       legend.key             = element_rect(fill = legend_key_col, color = 
-#> "#FFFF00", linewidth = 3), # yellow border
-#>       legend.text            = element_text(color = legend_text_col, size = 
-#> rel(1.5), face = "bold.italic",
-#>                                             family = "Comic Sans MS"),
-#>       legend.title           = element_text(color = legend_title_col, size = 
-#> rel(1.6), face = "bold",
-#>                                             family = "Impact"),
-#>       legend.position        = "right",
-#>       # Overly excessive margins to crowd in from sides, but top and bottom 
-#> little space
-#>       plot.margin            = margin(2, 80, 2, 65),
-#>       # Add base grid everywhere just in case
-#>       panel.grid             = element_line(),
-#>       # Insert a watermark-like annotation (user needs to add, but here's 
-#> guidance as comment)
-#>       # ggplot(...) + annotate("text", x = Inf, y = -Inf, label = 
-#> watermark_text, 
-#>       #      hjust = 1.2, vjust = -0.5, angle = 30, cex = 14, color = 
-#> "#FF00FF", alpha = 0.1,
-#>       #      family = "Comic Sans MS", fontface = "bold")
-#>       # For extra chartjunk, you can ask users to add geom_hline, geom_vline, 
-#> geom_mark*, and clip art!
-#>       # Clutter up strip placement
-#>       strip.placement        = "outside"
-#>     )
+#>     # Over-the-top backgrounds everywhere
+#>     plot.background  = element_rect(fill = bg_color, colour = border_col, 
+#> linewidth = 4),
+#>     panel.background = element_rect(fill = strip_bg1, colour = strip_bg2, 
+#> linewidth = 3),
+#> 
+#>     # Grid lines: overbearing, clashing and offset to clash
+#>     panel.grid.major = element_line(colour = grid_major, linewidth = 1.2, 
+#> linetype = "twodash"),
+#>     panel.grid.minor = element_line(colour = grid_minor, linewidth = 0.85, 
+#> linetype = "longdash"),
+#> 
+#>     # Panel border: thick and bright
+#>     panel.border = element_rect(fill = NA, colour = border_col, linewidth = 3),
+#> 
+#>     # Axis lines/ticks: garish, thick, mismatched colors
+#>     axis.line  = element_line(colour = axis_color, linewidth = 2.2, linetype = 
+#> "solid"),
+#>     axis.ticks = element_line(colour = tick_color, linewidth = 2.8, linetype = 
+#> "dotdash"),
+#>     axis.ticks.length = unit(3, "mm"),
+#>     axis.text = element_text(size = rel(1.3), colour = fg_text, face = "bold"),
+#>     axis.title = element_text(size = rel(1.4), colour = tick_color, face = 
+#> "bold.italic", angle = 5),
+#>     axis.title.x = element_text(margin = margin(t = half_line), vjust = 1.5),
+#>     axis.title.y = element_text(margin = margin(r = half_line), angle = 90, 
+#> vjust = 1.5),
+#> 
+#>     # Loud, clunky titles
+#>     plot.title = element_text(
+#>       colour = title_color, face = "bold.italic", size = rel(2.4),
+#>       hjust = 0.5, margin = margin(b = half_line * 0.8), angle = 8
+#>     ),
+#>     plot.subtitle = element_text(
+#>       colour = subtitle_col, face = "bold", size = rel(1.2),
+#>       hjust = 0.5, margin = margin(b = half_line * 0.8), angle = -7
+#>     ),
+#>     plot.caption = element_text(
+#>       colour = axis_color, size = rel(1.1),
+#>       hjust = 1, margin = margin(t = half_line * 2)
+#>     ),
+#>     plot.margin = margin(half_line * 2, half_line * 2, half_line * 2, half_line
+#> * 2),
+#> 
+#>     # In-your-face legend
+#>     legend.background  = element_rect(fill = legend_bg, colour = border_col, 
+#> linewidth = 3),
+#>     legend.key         = element_rect(fill = strip_bg2, colour = axis_color, 
+#> linewidth = 1.4),
+#>     legend.title       = element_text(
+#>       colour = border_col, face = "bold.italic", size = rel(1.2)
+#>     ),
+#>     legend.text        = element_text(
+#>       colour = "#ff00ff", size = rel(1.08), face = "italic"
+#>     ),
+#>     legend.position    = "top",
+#> 
+#>     # Multi-colored and bold facet strips
+#>     strip.background = element_rect(
+#>       fill = strip_bg2, colour = spiral_col, linewidth = 4, linetype = 
+#> "dotdash"
+#>     ),
+#>     strip.text = element_text(
+#>       colour = "#2E04A1", face = "bold.italic", size = rel(1.35), angle = 7
+#>     ),
+#> 
+#>     # "Chartjunk" embellishment: add a fake watermark (users will need to 
+#> ggplot2::annotation_custom for true effect)
+#>     plot.background.position = "left", # (not a real ggplot2 theme element; for
+#> clarity only)
+#>     # Complete the definition
+#>     complete = TRUE
+#>   )
 #> }
 p + theme_chartjunk()
 ```
