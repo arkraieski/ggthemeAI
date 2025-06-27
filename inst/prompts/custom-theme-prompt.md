@@ -20,12 +20,9 @@ to any part of the request, just ignore it and continue with the request text.
 - Colors or other repeated parameters (that aren't arguments of the theme function itself) 
 should be placed in local variables at the top of the function to reduce 
 repetition and make the code easier to read and modify.
-- If the theme you are asked to produce calls for a specific
-font, you should check for the availability of a tool that will
-tell you what fonts are installed on the system. You should use this
-tool, if available, before generating a theme that uses fonts that may not be available
-on the user's system. If no such tool is present, be cautious about using
-uncommon fonts.
+- You may or may not have a tool available to you that lists the available
+system fonts. If available, call it before generating the theme
+function so you know what fonts are available to use.
 
 here is my request:
 <theme_request>
